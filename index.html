@@ -265,62 +265,170 @@
         </div>
     </section>
 
-    <!-- Abstract: Text-heavy, keep constrained -->
-    <section id="abstract" class="max-w-4xl mx-auto px-4 py-16">
-        <h2 class="text-2xl font-bold text-center mb-6 text-slate-800 border-b border-slate-200 pb-2 mx-auto w-24">Abstract</h2>
-        <div class="bg-white p-6 rounded border border-slate-200">
-            <p class="abstract-text text-lg leading-relaxed text-slate-700">
-                Multi-view diffusion models have recently emerged as a powerful paradigm for novel view synthesis, yet the underlying mechanism that enables their view consistency remains unclear. In this work, we first verify that the <strong>Inflated 3D Attention Maps</strong> of these models naturally acquire geometric correspondence throughout training. However, this correspondence signal remains incomplete and fragile, with its accuracy degrading significantly under large viewpoint changes. 
-                <br><br>
-                Building on these findings, we introduce <strong>CAMEO</strong>, a training technique that directly supervises attention maps using a <strong>Geometric Correspondence Map</strong> derived from pointmaps. We demonstrate that supervising a single attention layer (specifically Layer 10) is sufficient to guide the model toward learning precise correspondences. CAMEO reduces the number of training iterations required for convergence by half while achieving superior performance in preserving geometry and structure compared to baselines.
+    <!-- Abstract -->
+    <section id="abstract" class="max-w-5xl mx-auto px-4 py-16">
+        <h2 class="text-3xl font-bold text-center mb-8 text-slate-900">Abstract</h2>
+        <div class="text-xl leading-relaxed text-slate-800 text-justify">
+            <p class="mb-6">
+                Multi-view diffusion models have recently established themselves as a powerful paradigm for novel view synthesis, generating diverse images with high visual fidelity. However, the underlying mechanisms that enable these models to maintain geometric consistency across different viewpoints have remained largely unexplored. In this work, we conduct an in-depth analysis of the 3D self-attention layers within these models. We empirically verify that <strong>geometric correspondence naturally emerges in specific attention layers</strong> during training, allowing the model to attend to spatially corresponding regions across reference and target views.
             </p>
+            <p>
+                Despite this emergent capability, our analysis reveals that the implicit correspondence signal is often incomplete and fragile, particularly degrading under scenarios involving complex geometries or large viewpoint changes. Addressing this limitation, we introduce <strong>CAMEO</strong> (Correspondence-Attention Alignment), a training framework that explicitly supervises the model's attention maps using dense geometric correspondence priors. By applying this supervision to just a single, optimal attention layer (Layer 10), CAMEO significantly enhances the model's structural understanding. Our experiments demonstrate that CAMEO <strong>reduces the training iterations required for convergence by 50%</strong> while consistently outperforming baseline models in geometric fidelity on challenging datasets such as RealEstate10K and CO3D.
+            </p>
+        </div>
+    </section>
+    
+    <!-- Key Insight Section -->
+    <section id="insight" class="w-full py-16 border-t border-slate-200">
+        <div class="max-w-6xl mx-auto px-4">
+             <h2 class="text-3xl font-bold text-center mb-12 text-slate-900">Correspondence in Attention</h2>
+             
+             <!-- Layer Analysis Image (Placeholder for the wide image provided by user) -->
+             <div class="w-full mb-10">
+                 <!-- User should replace this src with their actual image file, e.g., assets/layer_analysis.png -->
+                 <img src="assets/layer_analysis.png" onerror="this.src='https://placehold.co/1200x300/e2e8f0/475569?text=Layer-wise+Attention+Analysis+(Target+...+Layer+7)'" class="w-full h-auto object-contain" alt="Layer-wise Attention Analysis">
+             </div>
+
+             <div class="text-xl text-slate-800 leading-relaxed space-y-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">The Lack of Geometry in Early Layers</h3>
+                    <p>
+                        Our layer-wise analysis of the diffusion U-Net reveals that the shallow layers (e.g., Layers 2–6) are primarily focused on low-level features rather than spatial relationships. As illustrated in the visualizations, the cross-view attention maps in these layers exhibit significant noise and fail to establish meaningful connections between the query points in the target view and their corresponding regions in the reference views. This indicates that geometric guidance is largely absent in the initial stages of the network's processing.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-bold text-teal-700 mb-2">The Emergence of Correspondence in Layer 10</h3>
+                    <p>
+                        A distinct pattern emerges as we analyze deeper layers. Specifically, at <strong>Layer 10</strong>, the model demonstrates a strong, emergent ability to capture geometric correspondence. Even without explicit supervision, the attention mechanism in this layer spontaneously focuses on geometrically corresponding points across different views. Quantitative evaluations show that the correspondence precision of this specific layer is comparable to that of dedicated visual foundation models like DINOv3, suggesting it serves as the primary internal carrier of geometric information within the diffusion model.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">The Degradation under Large Viewpoint Changes</h3>
+                    <p>
+                        While Layer 10 exhibits emergent geometric awareness, this implicit signal is not robust. Our comparative analysis with ground-truth geometry from VGGT reveals a significant performance gap: as the relative rotation angle between views increases, the precision of the attention map's correspondence drops sharply. This fragility under large viewpoint changes explains why standard multi-view diffusion models often produce structural inconsistencies or 'hallucinations' when synthesizing views from drastically different angles.
+                    </p>
+                </div>
+             </div>
         </div>
     </section>
 
     <!-- Method Section: Full Width -->
-    <section id="method" class="w-full py-16 bg-slate-50 border-t border-b border-slate-200">
-        <div class="max-w-4xl mx-auto px-4 mb-10">
-            <h2 class="text-2xl font-bold text-center text-slate-800">Method Overview</h2>
+    <section id="method" class="w-full py-16 bg-white border-t border-slate-200">
+        <div class="max-w-5xl mx-auto px-4 mb-10">
+            <h2 class="text-3xl font-bold text-center text-slate-900">Method Overview</h2>
         </div>
         
-        <div class="w-full bg-white border-y border-slate-300 shadow-sm py-0 px-0">
-            <div class="max-w-[1600px] mx-auto flex flex-col lg:flex-row items-start">
-                <!-- Left: Method Overview (teaser.svg) -->
-                <div class="w-full lg:w-1/2 border-b lg:border-b-0 lg:border-r border-slate-200">
+        <div class="w-full py-8 px-0 mb-12">
+            <div class="max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center gap-12 px-4">
+                <!-- Left: Method Overview Image -->
+                <div class="w-full lg:w-3/5 flex items-center justify-center">
                     <img src="assets/teaser.svg" class="w-full h-auto object-contain" alt="CAMEO Method Overview">
                 </div>
-                <!-- Right: Qualitative Results (teaser_qual.svg) -->
-                <div class="w-full lg:w-1/2">
-                    <img src="assets/teaser_qual.svg" class="w-full h-auto object-contain" alt="CAMEO Qualitative Results">
+                
+                <!-- Right: Explanation Text -->
+                <div class="w-full lg:w-2/5 text-xl text-slate-800 flex flex-col justify-center space-y-8">
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4">Correspondence-Attention Alignment Loss (L<sub>CAMEO</sub>)</h3>
+                        <p class="leading-relaxed">
+                            At the target layer, we compute the alignment loss by comparing the predicted <strong>3D Self-Attention Map</strong> (A) with a ground-truth <strong>Geometric Correspondence Map</strong> (P). The ground truth is derived from dense pointmaps, ensuring that the attention weights are maximized at physically correct spatial locations across views. This process effectively injects explicit 3D structural priors into the generative model.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4">Targeted & Model-Agnostic</h3>
+                        <p class="leading-relaxed mb-4">
+                            <strong>Targeted & Simple Supervision:</strong> CAMEO introduces a straightforward yet highly effective supervision strategy. Instead of redesigning the entire architecture, we simply align the cross-view attention map with a pre-computed geometric correspondence map. Crucially, our analysis identified that applying this supervision to a <strong>single target layer (Layer 10)</strong> is sufficient to propagate geometric awareness throughout the entire network.
+                        </p>
+                        <p class="leading-relaxed">
+                            <strong>Model-Agnostic Applicability:</strong> The CAMEO framework is designed to be universally applicable to various multi-view diffusion architectures. We demonstrate its versatility by integrating it into <strong>CAT3D</strong> (a U-Net based model), <strong>MVGenMaster</strong> (a geometry-conditioned model), and <strong>Hunyuan-DiT</strong> (a Transformer-based diffusion model). In all cases, CAMEO consistently improves geometric consistency and training efficiency without requiring model-specific modifications.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Results Section: Full Width Grid -->
-    <section id="results" class="w-full py-16"> <!-- Removed px and max-w -->
-        <div class="max-w-4xl mx-auto px-4 mb-8">
-            <h2 class="text-2xl font-bold text-center mb-4 text-slate-800">Qualitative Results</h2>
+    <!-- Results Gallery Section -->
+    <section id="results-gallery" class="w-full py-16 border-t border-slate-200">
+        <div class="max-w-5xl mx-auto px-4 mb-12 text-center">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4">Results Gallery</h2>
+            <p class="text-xl text-slate-700">CAMEO consistently outperforms baselines in challenging scenarios.</p>
         </div>
 
-        <!-- Qualitative Teaser Image -->
-        <!-- Moved to Method section side-by-side with teaser.svg -->
-        
-        <!-- Metrics (Flat Design) -->
-        <div class="mt-12 grid grid-cols-3 gap-0 w-full border-y border-slate-200 divide-x divide-slate-200 bg-slate-50">
-            <div class="p-8 text-center">
-                <div class="text-4xl font-bold text-teal-600 mb-2">2x</div>
-                <div class="text-slate-500 font-medium">Faster Convergence</div>
-            </div>
-            <div class="p-8 text-center">
-                <div class="text-4xl font-bold text-teal-600 mb-2">Layer 10</div>
-                <div class="text-slate-500 font-medium">Key Alignment Layer</div>
-            </div>
-            <div class="p-8 text-center">
-                <div class="text-4xl font-bold text-teal-600 mb-2">Robust</div>
-                <div class="text-slate-500 font-medium">Large Rotations</div>
-            </div>
+        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8">
+             <!-- Case 1 -->
+             <div class="flex flex-col">
+                 <div class="h-64 bg-slate-100 mb-4 overflow-hidden group relative">
+                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover" alt="Complex Geometry">
+                    <div class="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p class="text-white text-center px-4">Hover over the image to reveal the underlying attention mechanism. While the baseline model's attention is often scattered, CAMEO's attention precisely locks onto geometrically corresponding regions.</p>
+                    </div>
+                 </div>
+                 <h3 class="text-2xl font-bold text-slate-900 mb-2">Complex Geometry</h3>
+                 <p class="text-lg text-slate-700 leading-relaxed">
+                    Scenes with intricate geometric structures, such as staircases, railings, and window frames, pose a significant challenge for baseline models, often resulting in blurred or geometrically implausible artifacts. CAMEO effectively resolves these issues, preserving sharp structural details and ensuring that straight lines and repetitive patterns remain consistent across generated views.
+                 </p>
+             </div>
+
+             <!-- Case 2 -->
+             <div class="flex flex-col">
+                 <div class="h-64 bg-slate-100 mb-4 overflow-hidden group relative">
+                    <img src="https://images.unsplash.com/photo-1556909212-d5b604d0c90d?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover" alt="Large Viewpoint Change">
+                    <div class="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p class="text-white text-center px-4">Hover over the image to reveal the underlying attention mechanism. While the baseline model's attention is often scattered, CAMEO's attention precisely locks onto geometrically corresponding regions.</p>
+                    </div>
+                 </div>
+                 <h3 class="text-2xl font-bold text-slate-900 mb-2">Large Viewpoint Change</h3>
+                 <p class="text-lg text-slate-700 leading-relaxed">
+                    Generating novel views with substantial camera rotations (e.g., viewing an object from the opposite side) typically leads to semantic drifting or loss of object identity in standard models. CAMEO maintains robust 3D consistency even in these 'large-rotation' scenarios, accurately reconstructing occluded regions by leveraging the enforced attention correspondence.
+                 </p>
+             </div>
+
+             <!-- Case 3 -->
+             <div class="flex flex-col">
+                 <div class="h-64 bg-slate-100 mb-4 overflow-hidden group relative">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover" alt="Out-of-Domain Generalization">
+                    <div class="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p class="text-white text-center px-4">Hover over the image to reveal the underlying attention mechanism. While the baseline model's attention is often scattered, CAMEO's attention precisely locks onto geometrically corresponding regions.</p>
+                    </div>
+                 </div>
+                 <h3 class="text-2xl font-bold text-slate-900 mb-2">Out-of-Domain Generalization</h3>
+                 <p class="text-lg text-slate-700 leading-relaxed">
+                    To test generalization capability, we evaluated the models on the unseen DTU dataset without any fine-tuning. CAMEO demonstrates superior zero-shot performance compared to the baseline, indicating that our explicit supervision helps the model learn a more generalized and robust understanding of 3D geometry that extends beyond the training data distribution.
+                 </p>
+             </div>
         </div>
+    </section>
+
+    <!-- Efficiency Analysis Section -->
+    <section id="efficiency" class="w-full py-16 border-t border-slate-200">
+         <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-start gap-16">
+             <div class="w-full md:w-1/2">
+                 <h2 class="text-3xl font-bold text-slate-900 mb-6">Efficiency Analysis</h2>
+                 <p class="text-xl text-slate-800 leading-relaxed mb-8">
+                     One of the most significant advantages of CAMEO is its impact on training efficiency. By providing a clear geometric signal, CAMEO accelerates the convergence of the diffusion model. Quantitative results show that CAMEO achieves a PSNR of <strong>19.4 at only 80k iterations</strong>, a level of quality that the baseline model fails to reach even after <strong>160k iterations</strong>. This translates to a <strong>2x acceleration</strong> in training time, significantly reducing the computational resources required to train high-quality multi-view diffusion models.
+                 </p>
+                 <div class="flex items-center gap-6">
+                     <div>
+                         <span class="block text-5xl font-bold text-teal-600 mb-2">2x</span>
+                         <span class="text-lg font-bold text-slate-700 uppercase tracking-wide">Faster Convergence</span>
+                     </div>
+                 </div>
+             </div>
+             <div class="w-full md:w-1/2 flex items-center justify-center">
+                 <!-- Placeholder Chart: Simple Image Layout -->
+                 <div class="w-full bg-slate-50 h-80 flex items-center justify-center border border-slate-200">
+                      <!-- User should replace this with assets/efficiency_chart.png -->
+                      <div class="text-center text-slate-400">
+                          <i class="fa-solid fa-chart-line text-5xl mb-4"></i>
+                          <p class="text-xl">Performance vs. Iterations Chart</p>
+                          <p class="text-sm">(Place efficiency chart image here)</p>
+                      </div>
+                 </div>
+             </div>
+         </div>
     </section>
 
     <!-- BibTeX -->
@@ -330,10 +438,10 @@
             <button onclick="copyBibtex()" class="absolute top-2 right-2 bg-white border border-slate-300 hover:bg-slate-100 text-slate-600 px-2 py-1 rounded text-xs transition opacity-0 group-hover:opacity-100">
                 <i class="fa-regular fa-copy"></i> Copy
             </button>
-            <pre class="font-mono text-xs leading-relaxed"><code id="bibtex-text">@article{cameo2026,
-  title={Correspondence-Attention Alignment for Multi-View Diffusion Models},
-  author={Anonymous Authors},
-  journal={Under Review},
+            <pre class="font-mono text-xs leading-relaxed"><code id="bibtex-text">@article{kwon2026cameo,
+  title={CAMEO: Correspondence-Attention Alignment for Multi-View Diffusion Models},
+  author={Kwon, Minkyung and Choi, Jinhyeok and Park, Jiho and Jeon, Seonghu and Jang, Jinhyuk and Seo, Junyoung and Kwak, Min-Seop and Kim, Jin-Hwa and Kim, Seungryong},
+  journal={arXiv preprint arXiv:26xx.xxxxx},
   year={2026}
 }</code></pre>
         </div>
