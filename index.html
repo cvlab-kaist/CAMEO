@@ -1,209 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAMEO: Correspondence-Attention Alignment for Multi-View Diffusion Models</title>
-    <meta name="description" content="Project page for CAMEO: Correspondence-Attention Alignment for Multi-View Diffusion Models (Under Review)">
-    
+    <meta name="description"
+        content="Project page for CAMEO: Correspondence-Attention Alignment for Multi-View Diffusion Models (Under Review)">
+
     <!-- Fonts and Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        teal: {
-                            50: '#DCF4EC',
-                            100: '#DCF4EC',
-                            200: '#b6ebe2',
-                            300: '#8fdcd4',
-                            400: '#65c9c3',
-                            500: '#3eaeb0',
-                            600: '#22869A',
-                            700: '#1b6b7b',
-                            800: '#15505c',
-                            900: '#0f3840',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <style>
-        body {
-            font-family: 'Google Sans', sans-serif;
-            background-color: #ffffff;
-            color: #1e293b;
-        }
-        .abstract-text {
-            font-family: 'Google Sans', sans-serif;
-            text-align: justify;
-        }
-        /* Paper Tone: Teal/Cyan Gradient */
-        .gradient-text {
-            background: linear-gradient(to right, #22869A, #1b6b7b);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        /* Image Comparison Slider Styles */
-        .img-comp-container {
-            position: relative;
-            height: 400px; /* Increased height for full width impact */
-            overflow: hidden;
-            border-radius: 0; /* Removed radius for full bleed */
-            border: none;
-            cursor: ew-resize;
-        }
-        .img-comp-img {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-        .img-comp-img img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .img-comp-slider {
-            position: absolute;
-            z-index: 9;
-            cursor: ew-resize;
-            width: 40px;
-            height: 40px;
-            background-color: white;
-            border-radius: 50%;
-            border: 2px solid #22869A; /* Teal color */
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            /* No shadow, just border */
-            border: 2px solid #22869A;
-        }
-        .img-comp-slider::before {
-            content: '\f337';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            color: #22869A;
-        }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #b6ebe2;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #8fdcd4;
-        }
-        
-        /* Diagram Styles */
-        .diffusion-block {
-            position: relative;
-            background-color: #f1f5f9; /* slate-100 */
-            border: 1px solid #cbd5e1; /* slate-300 */
-            border-radius: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            color: #475569;
-            font-weight: 500;
-            writing-mode: vertical-lr;
-            transform: rotate(180deg);
-            height: 120px;
-            width: 40px;
-            transition: all 0.3s ease;
-        }
-        .diffusion-block.highlight {
-            background-color: #DCF4EC; /* teal-100 */
-            border: 2px solid #22869A; /* teal-600 */
-            color: #22869A;
-            font-weight: 700;
-            z-index: 10;
-        }
-        .pipeline-arrow {
-            color: #94a3b8;
-            font-size: 1.2rem;
-        }
-        .grid-map {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 1px;
-            width: 100%;
-            aspect-ratio: 1;
-            background-color: #e2e8f0;
-            border: 1px solid #cbd5e1;
-        }
-        .grid-cell {
-            background-color: #f8fafc;
-        }
-        .grid-cell.active-teal {
-            background-color: #65c9c3;
-        }
-        .grid-cell.active-red {
-            background-color: #f87171;
-        }
-        .grid-cell.active-mix {
-            background: linear-gradient(135deg, #65c9c3 50%, #f87171 50%);
-        }
-    </style>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <!-- Navbar -->
-    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div class="w-full px-4 sm:px-6 lg:px-8"> <!-- Full width container -->
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <span class="font-bold text-xl tracking-tight text-slate-800">CAMEO</span>
-                </div>
-                <div class="flex items-center space-x-6">
-                    <a href="#abstract" class="text-slate-600 hover:text-teal-700 font-medium transition">Abstract</a>
-                    <a href="#method" class="text-slate-600 hover:text-teal-700 font-medium transition">Method</a>
-                    <a href="#results" class="text-slate-600 hover:text-teal-700 font-medium transition">Results</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <a href="#overview" class="sidebar-item">
+            <div class="sidebar-dot"></div>
+            <span class="sidebar-label">Overview</span>
+        </a>
+        <a href="#analysis" class="sidebar-item">
+            <div class="sidebar-dot"></div>
+            <span class="sidebar-label">Analysis</span>
+        </a>
+        <a href="#cameo" class="sidebar-item">
+            <div class="sidebar-dot"></div>
+            <span class="sidebar-label">CAMEO</span>
+        </a>
+        <a href="#results" class="sidebar-item">
+            <div class="sidebar-dot"></div>
+            <span class="sidebar-label">Results</span>
+        </a>
+        <a href="#citation" class="sidebar-item">
+            <div class="sidebar-dot"></div>
+            <span class="sidebar-label">Citation</span>
+        </a>
+    </div>
 
-    <!-- Header Section -->
-    <section class="pt-16 pb-0 text-center w-full"> <!-- Removed px and max-w limitations on section -->
-        <div class="max-w-4xl mx-auto px-4 mb-12"> <!-- Text stays constrained -->
-            <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight text-slate-900">
-                <span class="gradient-text">CAMEO</span>: Correspondence-Attention Alignment for Multi-View Diffusion Models
+    <!-- Hero Section -->
+    <section id="overview" class="hero-section">
+        <div class="hero-container">
+            <h1 class="hero-title">
+                <span class="gradient-text">CAMEO</span>
+                <video autoplay loop muted playsinline class="hero-video-icon">
+                    <source src="assets/cameoji.webm" type="video/webm">
+                </video>
+                : Correspondence-Attention Alignment for Multi-View Diffusion Models
             </h1>
-            <p class="text-xl text-teal-700 font-semibold mb-6">Under Review</p>
-            
+            <p class="hero-status">Under Review</p>
+
             <!-- Authors -->
-            <div class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-lg mb-6 max-w-3xl mx-auto">
-                <span class="text-slate-700 font-medium whitespace-nowrap">Minkyung Kwon<sup>1</sup></span>
-                <span class="text-slate-700 font-medium whitespace-nowrap">Jinhyeok Choi<sup>1</sup></span>
-                <span class="text-slate-700 font-medium whitespace-nowrap">Jiho Park<sup>2</sup></span>
-                <span class="text-slate-700 font-medium whitespace-nowrap">Seonghu Jeon<sup>3</sup></span>
-                <span class="text-slate-700 font-medium whitespace-nowrap">Jinhyuk Jang<sup>1</sup></span>
-                <span class="text-slate-700 font-medium whitespace-nowrap">Junyoung Seo<sup>1</sup></span>
-                <span class="text-slate-700 font-medium whitespace-nowrap">Min-Seop Kwak<sup>1</sup></span>
-                <span class="text-slate-700 font-medium whitespace-nowrap">Jin-Hwa Kim<sup>4</sup></span>
-                <span class="text-slate-700 font-medium whitespace-nowrap">Seungryong Kim<sup>1</sup></span>
+            <div class="hero-authors">
+                <span>Minkyung Kwon<sup>1</sup></span>
+                <span>Jinhyeok Choi<sup>1</sup></span>
+                <span>Jiho Park<sup>2</sup></span>
+                <span>Seonghu Jeon<sup>3</sup></span>
+                <span>Jinhyuk Jang<sup>1</sup></span>
+                <span>Junyoung Seo<sup>1</sup></span>
+                <span>Min-Seop Kwak<sup>1</sup></span>
+                <span>Jin-Hwa Kim<sup>4</sup></span>
+                <span>Seungryong Kim<sup>1</sup></span>
             </div>
 
-            <div class="flex flex-wrap justify-center gap-4 mb-8 text-slate-500 text-sm">
+            <div class="hero-affiliations">
                 <span><sup>1</sup>KAIST</span>
                 <span><sup>2</sup>Yonsei University</span>
                 <span><sup>3</sup>Korea University</span>
@@ -211,253 +75,564 @@
             </div>
 
             <!-- Link Buttons -->
-            <div class="flex justify-center gap-4 mb-12">
-                <a href="#" class="flex items-center gap-2 px-6 py-2 bg-slate-900 text-white rounded border border-slate-900 hover:bg-slate-700 transition">
+            <div class="hero-buttons">
+                <a href="#" class="btn">
                     <i class="fa-solid fa-file-pdf"></i> Paper
                 </a>
-                <a href="#" class="flex items-center gap-2 px-6 py-2 bg-white text-slate-800 rounded border border-slate-300 hover:bg-slate-50 transition">
+                <a href="#" class="btn btn-outline">
                     <i class="fa-brands fa-github"></i> Code (Coming Soon)
                 </a>
-                <a href="#bibtex" class="flex items-center gap-2 px-6 py-2 bg-white text-slate-800 rounded border border-slate-300 hover:bg-slate-50 transition">
+                <a href="#bibtex" class="btn btn-outline">
                     <i class="fa-solid fa-quote-right"></i> BibTeX
                 </a>
             </div>
         </div>
 
-        <!-- Teaser Image: Full Width (Bleed) -->
-        <div class="w-full bg-white overflow-hidden relative py-0 px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto">
-            
-            <!-- Image Comparison Sliders in Header/Teaser Area -->
-            <div class="grid md:grid-cols-2 gap-4 w-full mt-8 mb-8">
-                <!-- Result 1 -->
-                <div class="relative group">
-                    <div class="img-comp-container h-[500px]" id="compare1">
-                        <div class="img-comp-img">
-                            <!-- Placeholder for CAMEO Result -->
-                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1600&auto=format&fit=crop" alt="CAMEO (Ours)">
-                            <div class="absolute bottom-4 right-4 bg-teal-900/90 text-white px-3 py-1 text-sm font-medium border border-teal-500 backdrop-blur-sm">CAMEO</div>
-                        </div>
-                        <div class="img-comp-img img-comp-overlay">
-                            <!-- Placeholder for Baseline Result (Blurry/Distorted) -->
-                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1600&auto=format&fit=crop&blur=50" style="filter: blur(4px) contrast(1.2);" alt="Baseline">
-                             <div class="absolute bottom-4 left-4 bg-slate-900/90 text-white px-3 py-1 text-sm font-medium border border-slate-500 backdrop-blur-sm">Baseline</div>
-                        </div>
-                    </div>
-                    <div class="absolute top-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-2 py-1 text-xs rounded backdrop-blur-sm">Large Viewpoint Change</div>
-                </div>
-
-                <!-- Result 2 -->
-                <div class="relative group">
-                    <div class="img-comp-container h-[500px]" id="compare2">
-                        <div class="img-comp-img">
-                            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1600&auto=format&fit=crop" alt="CAMEO (Ours)">
-                            <div class="absolute bottom-4 right-4 bg-teal-900/90 text-white px-3 py-1 text-sm font-medium border border-teal-500 backdrop-blur-sm">CAMEO</div>
-                        </div>
-                        <div class="img-comp-img img-comp-overlay">
-                            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1600&auto=format&fit=crop" style="filter: hue-rotate(30deg) blur(2px);" alt="Baseline">
-                            <div class="absolute bottom-4 left-4 bg-slate-900/90 text-white px-3 py-1 text-sm font-medium border border-slate-500 backdrop-blur-sm">Baseline</div>
-                        </div>
-                    </div>
-                     <div class="absolute top-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-2 py-1 text-xs rounded backdrop-blur-sm">Complex Geometry</div>
+        <!-- Teaser Section -->
+        <div class="teaser-container">
+            <!-- TL;DR Box -->
+            <div class="tldr-box">
+                <div class="tldr-content">
+                    <span class="tldr-label">TL;DR</span>
+                    <p class="tldr-text">
+                        We discover that multi-view diffusion models naturally learn 3D geometry in specific attention
+                        layers.
+                        <span class="tldr-highlight">CAMEO</span> aligns this internal attention with geometric
+                        correspondence,<br>achieving
+                        <span class="tldr-highlight">2x faster convergence</span> and <span
+                            class="tldr-highlight">superior geometric consistency</span>.
+                    </p>
                 </div>
             </div>
 
+            <!-- Image Comparison Sliders -->
+            <div class="comparison-grid">
+                <!-- Result 1 -->
+                <div class="comparison-item">
+                    <div class="img-comp-container" id="compare1">
+                        <div class="img-comp-img">
+                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1600&auto=format&fit=crop"
+                                alt="CAMEO (Ours)">
+                            <div class="img-comp-badge cameo">CAMEO</div>
+                        </div>
+                        <div class="img-comp-img img-comp-overlay">
+                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1600&auto=format&fit=crop&blur=50"
+                                style="filter: blur(4px) contrast(1.2);" alt="Baseline">
+                            <div class="img-comp-badge baseline">Baseline</div>
+                        </div>
+                    </div>
+                    <div class="comparison-label">Large Viewpoint Change</div>
+                </div>
+
+                <!-- Result 2 -->
+                <div class="comparison-item">
+                    <div class="img-comp-container" id="compare2">
+                        <div class="img-comp-img">
+                            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1600&auto=format&fit=crop"
+                                alt="CAMEO (Ours)">
+                            <div class="img-comp-badge cameo">CAMEO</div>
+                        </div>
+                        <div class="img-comp-img img-comp-overlay">
+                            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1600&auto=format&fit=crop"
+                                style="filter: hue-rotate(30deg) blur(2px);" alt="Baseline">
+                            <div class="img-comp-badge baseline">Baseline</div>
+                        </div>
+                    </div>
+                    <div class="comparison-label">Complex Geometry</div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Abstract -->
-    <section id="abstract" class="max-w-5xl mx-auto px-4 py-16">
-        <h2 class="text-3xl font-bold text-center mb-8 text-slate-900">Abstract</h2>
-        <div class="text-xl leading-relaxed text-slate-800 text-justify">
-            <p class="mb-6">
-                Multi-view diffusion models have recently established themselves as a powerful paradigm for novel view synthesis, generating diverse images with high visual fidelity. However, the underlying mechanisms that enable these models to maintain geometric consistency across different viewpoints have remained largely unexplored. In this work, we conduct an in-depth analysis of the 3D self-attention layers within these models. We empirically verify that <strong>geometric correspondence naturally emerges in specific attention layers</strong> during training, allowing the model to attend to spatially corresponding regions across reference and target views.
-            </p>
-            <p>
-                Despite this emergent capability, our analysis reveals that the implicit correspondence signal is often incomplete and fragile, particularly degrading under scenarios involving complex geometries or large viewpoint changes. Addressing this limitation, we introduce <strong>CAMEO</strong> (Correspondence-Attention Alignment), a training framework that explicitly supervises the model's attention maps using dense geometric correspondence priors. By applying this supervision to just a single, optimal attention layer (Layer 10), CAMEO significantly enhances the model's structural understanding. Our experiments demonstrate that CAMEO <strong>reduces the training iterations required for convergence by 50%</strong> while consistently outperforming baseline models in geometric fidelity on challenging datasets such as RealEstate10K and CO3D.
-            </p>
-        </div>
-    </section>
-    
-    <!-- Key Insight Section -->
-    <section id="insight" class="w-full py-16 border-t border-slate-200">
-        <div class="max-w-6xl mx-auto px-4">
-             <h2 class="text-3xl font-bold text-center mb-12 text-slate-900">Correspondence in Attention</h2>
-             
-             <!-- Layer Analysis Image (Placeholder for the wide image provided by user) -->
-             <div class="w-full mb-10">
-                 <!-- User should replace this src with their actual image file, e.g., assets/layer_analysis.png -->
-                 <img src="assets/layer_analysis.png" onerror="this.src='https://placehold.co/1200x300/e2e8f0/475569?text=Layer-wise+Attention+Analysis+(Target+...+Layer+7)'" class="w-full h-auto object-contain" alt="Layer-wise Attention Analysis">
-             </div>
-
-             <div class="text-xl text-slate-800 leading-relaxed space-y-8">
-                <div>
-                    <h3 class="text-2xl font-bold text-slate-900 mb-2">The Lack of Geometry in Early Layers</h3>
-                    <p>
-                        Our layer-wise analysis of the diffusion U-Net reveals that the shallow layers (e.g., Layers 2–6) are primarily focused on low-level features rather than spatial relationships. As illustrated in the visualizations, the cross-view attention maps in these layers exhibit significant noise and fail to establish meaningful connections between the query points in the target view and their corresponding regions in the reference views. This indicates that geometric guidance is largely absent in the initial stages of the network's processing.
-                    </p>
-                </div>
-                
-                <div>
-                    <h3 class="text-2xl font-bold text-teal-700 mb-2">The Emergence of Correspondence in Layer 10</h3>
-                    <p>
-                        A distinct pattern emerges as we analyze deeper layers. Specifically, at <strong>Layer 10</strong>, the model demonstrates a strong, emergent ability to capture geometric correspondence. Even without explicit supervision, the attention mechanism in this layer spontaneously focuses on geometrically corresponding points across different views. Quantitative evaluations show that the correspondence precision of this specific layer is comparable to that of dedicated visual foundation models like DINOv3, suggesting it serves as the primary internal carrier of geometric information within the diffusion model.
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="text-2xl font-bold text-slate-900 mb-2">The Degradation under Large Viewpoint Changes</h3>
-                    <p>
-                        While Layer 10 exhibits emergent geometric awareness, this implicit signal is not robust. Our comparative analysis with ground-truth geometry from VGGT reveals a significant performance gap: as the relative rotation angle between views increases, the precision of the attention map's correspondence drops sharply. This fragility under large viewpoint changes explains why standard multi-view diffusion models often produce structural inconsistencies or 'hallucinations' when synthesizing views from drastically different angles.
-                    </p>
-                </div>
-             </div>
+    <section class="section alt-bg">
+        <div class="container">
+            <h2 class="section-title">Abstract</h2>
+            <div class="abstract-text">
+                <p>
+                    Multi-view diffusion models have recently established themselves as a powerful paradigm for novel
+                    view synthesis, generating diverse images with high visual fidelity. However, the underlying
+                    mechanisms
+                    that enable these models to maintain geometric consistency across different viewpoints have remained
+                    largely unexplored. In this work, we conduct an in-depth analysis of the 3D self-attention layers
+                    within
+                    these models. We empirically verify that <strong>geometric correspondence naturally emerges in
+                        specific
+                        attention layers</strong> during training, allowing the model to attend to spatially
+                    corresponding regions across reference and target views.
+                </p>
+                <p>
+                    Despite this emergent capability, our analysis reveals that the implicit correspondence signal is
+                    often incomplete and fragile, particularly degrading under scenarios involving complex geometries or
+                    large
+                    viewpoint changes. Addressing this limitation, we introduce <strong>CAMEO</strong>
+                    (Correspondence-Attention Alignment), a training framework that explicitly supervises the model's
+                    attention maps using dense geometric correspondence priors. By applying this supervision to just a
+                    single, optimal attention layer (Layer 10), CAMEO significantly enhances the model's structural
+                    understanding. Our experiments demonstrate that CAMEO <strong>reduces the training iterations
+                        required for convergence by 50%</strong> while consistently outperforming baseline models in
+                    geometric
+                    fidelity on challenging datasets such as RealEstate10K and CO3D.
+                </p>
+            </div>
         </div>
     </section>
 
-    <!-- Method Section: Full Width -->
-    <section id="method" class="w-full py-16 bg-white border-t border-slate-200">
-        <div class="max-w-5xl mx-auto px-4 mb-10">
-            <h2 class="text-3xl font-bold text-center text-slate-900">Method Overview</h2>
-        </div>
-        
-        <div class="w-full py-8 px-0 mb-12">
-            <div class="max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center gap-12 px-4">
-                <!-- Left: Method Overview Image -->
-                <div class="w-full lg:w-3/5 flex items-center justify-center">
-                    <img src="assets/teaser.svg" class="w-full h-auto object-contain" alt="CAMEO Method Overview">
+    <!-- Analysis Section -->
+    <section id="analysis" class="section">
+        <div class="container">
+            <h2 class="section-title">Analysis</h2>
+
+
+            <div>
+                <h3 class="analysis-subtitle">Emergence of Geometry in Layer 10</h3>
+
+                <div class="analysis-image-container">
+                    <img src="assets/layer_analysis.png"
+                        onerror="this.src='https://placehold.co/1200x300/e2e8f0/475569?text=Figure+3:+Attention+Maps'"
+                        class="analysis-image" alt="Emergence of Geometry in Layer 10">
                 </div>
-                
-                <!-- Right: Explanation Text -->
-                <div class="w-full lg:w-2/5 text-xl text-slate-800 flex flex-col justify-center space-y-8">
-                    <div>
-                        <h3 class="text-2xl font-bold text-slate-900 mb-4">Correspondence-Attention Alignment Loss (L<sub>CAMEO</sub>)</h3>
-                        <p class="leading-relaxed">
-                            At the target layer, we compute the alignment loss by comparing the predicted <strong>3D Self-Attention Map</strong> (A) with a ground-truth <strong>Geometric Correspondence Map</strong> (P). The ground truth is derived from dense pointmaps, ensuring that the attention weights are maximized at physically correct spatial locations across views. This process effectively injects explicit 3D structural priors into the generative model.
-                        </p>
-                    </div>
-                    
-                    <div>
-                        <h3 class="text-2xl font-bold text-slate-900 mb-4">Targeted & Model-Agnostic</h3>
-                        <p class="leading-relaxed mb-4">
-                            <strong>Targeted & Simple Supervision:</strong> CAMEO introduces a straightforward yet highly effective supervision strategy. Instead of redesigning the entire architecture, we simply align the cross-view attention map with a pre-computed geometric correspondence map. Crucially, our analysis identified that applying this supervision to a <strong>single target layer (Layer 10)</strong> is sufficient to propagate geometric awareness throughout the entire network.
-                        </p>
-                        <p class="leading-relaxed">
-                            <strong>Model-Agnostic Applicability:</strong> The CAMEO framework is designed to be universally applicable to various multi-view diffusion architectures. We demonstrate its versatility by integrating it into <strong>CAT3D</strong> (a U-Net based model), <strong>MVGenMaster</strong> (a geometry-conditioned model), and <strong>Hunyuan-DiT</strong> (a Transformer-based diffusion model). In all cases, CAMEO consistently improves geometric consistency and training efficiency without requiring model-specific modifications.
-                        </p>
-                    </div>
+
+                <div class="results-caption">
+                    <p>
+                        <strong>Visualizing Attention Maps.</strong> Comparison between Early Layers vs. Layer 10.
+                    </p>
+                </div>
+
+                <p>
+                    Our layer-wise analysis reveals a distinct contrast in behavior. The shallow layers (e.g., Layers
+                    2–6) exhibit significant noise and fail to establish meaningful connections between views. In
+                    contrast, <strong>Layer 10</strong> spontaneously demonstrates a strong emergent ability to capture
+                    geometric correspondence. Even without explicit supervision, the attention mechanism in this layer
+                    naturally focuses on geometrically corresponding points across different views, acting as the
+                    primary internal carrier of geometric information.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="analysis-subtitle">Causal Role of Layer 10</h3>
+
+                <div class="analysis-image-container">
+                    <img src="assets/layer_analysis.png"
+                        onerror="this.src='https://placehold.co/1200x300/e2e8f0/475569?text=Figure+4:+Perturbation+Analysis'"
+                        class="analysis-image" alt="Causal Role of Layer 10">
+                </div>
+
+                <div class="results-caption">
+                    <p>
+                        <strong>Perturbation Analysis.</strong> Result of perturbing Layer 10 vs. other layers.
+                    </p>
+                </div>
+
+                <p>
+                    To verify the causal relationship between this emergent correspondence and generation quality, we
+                    conducted a perturbation analysis. While perturbing earlier layers leaves the output nearly
+                    unchanged, perturbing <strong>Layer 10</strong> leads to a complete collapse of the scene's
+                    geometric structure. This proves that the correspondence signal in Layer 10 is not just an artifact
+                    but a critical component for maintaining view consistency.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="analysis-subtitle">Quantitative Verification & Limitation</h3>
+
+                <div class="analysis-image-container">
+                    <img src="assets/layer_analysis.png"
+                        onerror="this.src='https://placehold.co/1200x300/e2e8f0/475569?text=Figure+5:+Quantitative+Analysis'"
+                        class="analysis-image" alt="Quantitative Analysis">
+                </div>
+
+                <div class="results-caption">
+                    <p>
+                        <strong>Quantitative Graphs.</strong> (b) Precision across viewpoint rotation, (c) Precision &
+                        PSNR correlation.
+                    </p>
+                </div>
+
+                <p>
+                    We quantitatively evaluated the correspondence precision on the NAVI dataset. Our analysis
+                    highlights three key findings:
+                </p>
+                <ul style="list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1.5rem; color: var(--color-text-main); font-size: 1.25rem; line-height: 1.625;">
+                    <li style="margin-bottom: 0.5rem;">
+                        <strong>Correlation with Quality:</strong> As shown in the training dynamics, there is a strong
+                        positive correlation between correspondence precision and generation quality (PSNR). As the
+                        model learns better correspondence, the visual quality improves, confirming that correspondence
+                        underpins synthesis performance.
+                    </li>
+                    <li style="margin-bottom: 0.5rem;">
+                        <strong>CAMEO Improves Correspondence:</strong> Our proposed method, <strong>CAMEO</strong>,
+                        explicitly boosts this correspondence precision, surpassing the baseline and achieving accuracy
+                        comparable to dedicated discriminative models like DINOv3.
+                    </li>
+                    <li>
+                        <strong>Limitation (Viewpoint Degradation):</strong> Despite these strengths, the baseline's
+                        implicit correspondence is fragile. As the relative rotation angle increases (e.g.,
+                        &gt;90&deg;), the precision drops sharply. This "viewpoint degradation" necessitates
+                        explicit supervision to maintain robustness in challenging scenarios.
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- CAMEO Section -->
+    <section id="cameo" class="section alt-bg">
+        <div class="container">
+            <h2 class="section-title">CAMEO</h2>
+
+            <div class="analysis-image-container">
+                <img src="assets/teaser.svg" alt="CAMEO Method Overview" class="analysis-image">
+            </div>
+
+            <div class="results-caption">
+                <p>
+                    <strong>CAMEO Framework Overview.</strong> We introduce Correspondence-Attention Alignment,
+                    a training framework that explicitly supervises the model's attention maps using dense geometric
+                    correspondence priors. By applying supervision to a single optimal attention layer (Layer 10),
+                    CAMEO significantly enhances structural understanding and achieves 2x faster convergence.
+                </p>
+            </div>
+
+            <div class="cameo-description">
+                <div>
+                    <h3 class="analysis-subtitle">Correspondence-Attention Alignment Loss (L<sub>CAMEO</sub>)</h3>
+                    <p>
+                        At the target layer, we compute the alignment loss by comparing the predicted <strong>3D
+                            Self-Attention Map</strong> (A) with a ground-truth <strong>Geometric Correspondence
+                            Map</strong> (P). The ground truth is derived from dense pointmaps, ensuring that the
+                        attention weights are maximized at physically correct spatial locations across views. This
+                        process effectively injects explicit 3D structural priors into the generative model.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="analysis-subtitle">Targeted & Model-Agnostic</h3>
+                    <p>
+                        <strong>Targeted & Simple Supervision:</strong> CAMEO introduces a straightforward yet
+                        highly effective supervision strategy. Instead of redesigning the entire architecture, we
+                        simply align the cross-view attention map with a pre-computed geometric correspondence map.
+                        Crucially, our analysis identified that applying this supervision to a <strong>single target
+                            layer (Layer 10)</strong> is sufficient to propagate geometric awareness throughout the
+                        entire network.
+                    </p>
+                    <p>
+                        <strong>Model-Agnostic Applicability:</strong> The CAMEO framework is designed to be
+                        universally applicable. We demonstrate its effectiveness on both <strong>Stable Video
+                            Diffusion</strong> (a UNet-based video generation model) and
+                        <strong>Hunyuan-DiT</strong> (a Transformer-based diffusion model). In all cases, CAMEO
+                        consistently improves geometric consistency without compromising generation quality.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Results Gallery Section -->
-    <section id="results-gallery" class="w-full py-16 border-t border-slate-200">
-        <div class="max-w-5xl mx-auto px-4 mb-12 text-center">
-            <h2 class="text-3xl font-bold text-slate-900 mb-4">Results Gallery</h2>
-            <p class="text-xl text-slate-700">CAMEO consistently outperforms baselines in challenging scenarios.</p>
-        </div>
+    <!-- Results Section -->
+    <section id="results" class="section">
+        <div class="container">
 
-        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8">
-             <!-- Case 1 -->
-             <div class="flex flex-col">
-                 <div class="h-64 bg-slate-100 mb-4 overflow-hidden group relative">
-                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover" alt="Complex Geometry">
-                    <div class="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <p class="text-white text-center px-4">Hover over the image to reveal the underlying attention mechanism. While the baseline model's attention is often scattered, CAMEO's attention precisely locks onto geometrically corresponding regions.</p>
-                    </div>
-                 </div>
-                 <h3 class="text-2xl font-bold text-slate-900 mb-2">Complex Geometry</h3>
-                 <p class="text-lg text-slate-700 leading-relaxed">
-                    Scenes with intricate geometric structures, such as staircases, railings, and window frames, pose a significant challenge for baseline models, often resulting in blurred or geometrically implausible artifacts. CAMEO effectively resolves these issues, preserving sharp structural details and ensuring that straight lines and repetitive patterns remain consistent across generated views.
-                 </p>
-             </div>
+            <!-- 1. Quantitative Results -->
+            <div class="results-block">
+                <h2 class="section-title">Quantitative Results</h2>
+                <div id="carousel-quan" class="carousel-container">
+                    <!-- Injected by JS -->
+                </div>
+            </div>
 
-             <!-- Case 2 -->
-             <div class="flex flex-col">
-                 <div class="h-64 bg-slate-100 mb-4 overflow-hidden group relative">
-                    <img src="https://images.unsplash.com/photo-1556909212-d5b604d0c90d?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover" alt="Large Viewpoint Change">
-                    <div class="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <p class="text-white text-center px-4">Hover over the image to reveal the underlying attention mechanism. While the baseline model's attention is often scattered, CAMEO's attention precisely locks onto geometrically corresponding regions.</p>
-                    </div>
-                 </div>
-                 <h3 class="text-2xl font-bold text-slate-900 mb-2">Large Viewpoint Change</h3>
-                 <p class="text-lg text-slate-700 leading-relaxed">
-                    Generating novel views with substantial camera rotations (e.g., viewing an object from the opposite side) typically leads to semantic drifting or loss of object identity in standard models. CAMEO maintains robust 3D consistency even in these 'large-rotation' scenarios, accurately reconstructing occluded regions by leveraging the enforced attention correspondence.
-                 </p>
-             </div>
+            <!-- 2. Qualitative Results -->
+            <div class="results-block">
+                <h2 class="section-title">Qualitative Results</h2>
+                <div id="carousel-qual" class="carousel-container">
+                    <!-- Injected by JS -->
+                </div>
+            </div>
 
-             <!-- Case 3 -->
-             <div class="flex flex-col">
-                 <div class="h-64 bg-slate-100 mb-4 overflow-hidden group relative">
-                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover" alt="Out-of-Domain Generalization">
-                    <div class="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <p class="text-white text-center px-4">Hover over the image to reveal the underlying attention mechanism. While the baseline model's attention is often scattered, CAMEO's attention precisely locks onto geometrically corresponding regions.</p>
-                    </div>
-                 </div>
-                 <h3 class="text-2xl font-bold text-slate-900 mb-2">Out-of-Domain Generalization</h3>
-                 <p class="text-lg text-slate-700 leading-relaxed">
-                    To test generalization capability, we evaluated the models on the unseen DTU dataset without any fine-tuning. CAMEO demonstrates superior zero-shot performance compared to the baseline, indicating that our explicit supervision helps the model learn a more generalized and robust understanding of 3D geometry that extends beyond the training data distribution.
-                 </p>
-             </div>
+            <!-- 3. Ablation Studies -->
+            <div class="results-block">
+                <h2 class="section-title">Ablation Studies</h2>
+                <div id="carousel-abl" class="carousel-container">
+                    <!-- Injected by JS -->
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <!-- Efficiency Analysis Section -->
-    <section id="efficiency" class="w-full py-16 border-t border-slate-200">
-         <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-start gap-16">
-             <div class="w-full md:w-1/2">
-                 <h2 class="text-3xl font-bold text-slate-900 mb-6">Efficiency Analysis</h2>
-                 <p class="text-xl text-slate-800 leading-relaxed mb-8">
-                     One of the most significant advantages of CAMEO is its impact on training efficiency. By providing a clear geometric signal, CAMEO accelerates the convergence of the diffusion model. Quantitative results show that CAMEO achieves a PSNR of <strong>19.4 at only 80k iterations</strong>, a level of quality that the baseline model fails to reach even after <strong>160k iterations</strong>. This translates to a <strong>2x acceleration</strong> in training time, significantly reducing the computational resources required to train high-quality multi-view diffusion models.
-                 </p>
-                 <div class="flex items-center gap-6">
-                     <div>
-                         <span class="block text-5xl font-bold text-teal-600 mb-2">2x</span>
-                         <span class="text-lg font-bold text-slate-700 uppercase tracking-wide">Faster Convergence</span>
-                     </div>
-                 </div>
-             </div>
-             <div class="w-full md:w-1/2 flex items-center justify-center">
-                 <!-- Placeholder Chart: Simple Image Layout -->
-                 <div class="w-full bg-slate-50 h-80 flex items-center justify-center border border-slate-200">
-                      <!-- User should replace this with assets/efficiency_chart.png -->
-                      <div class="text-center text-slate-400">
-                          <i class="fa-solid fa-chart-line text-5xl mb-4"></i>
-                          <p class="text-xl">Performance vs. Iterations Chart</p>
-                          <p class="text-sm">(Place efficiency chart image here)</p>
-                      </div>
-                 </div>
-             </div>
-         </div>
-    </section>
-
-    <!-- BibTeX -->
-    <section id="bibtex" class="max-w-4xl mx-auto px-4 py-12 border-t border-slate-200 mt-8">
-        <h2 class="text-xl font-bold mb-4 text-slate-800">BibTeX</h2>
-        <div class="bg-slate-50 text-slate-600 p-4 rounded border border-slate-200 overflow-x-auto relative group">
-            <button onclick="copyBibtex()" class="absolute top-2 right-2 bg-white border border-slate-300 hover:bg-slate-100 text-slate-600 px-2 py-1 rounded text-xs transition opacity-0 group-hover:opacity-100">
-                <i class="fa-regular fa-copy"></i> Copy
-            </button>
-            <pre class="font-mono text-xs leading-relaxed"><code id="bibtex-text">@article{kwon2026cameo,
+    <!-- Citation Section -->
+    <section id="citation" class="citation-section">
+        <div class="container">
+            <h2 class="section-title" style="font-size: 1.5rem; border: none; margin-bottom: 1rem;">Citation</h2>
+            <div class="citation-block group">
+                <button onclick="copyBibtex()" class="citation-copy-btn">
+                    <i class="fa-regular fa-copy"></i> Copy
+                </button>
+                <pre class="citation-code"><code id="bibtex-text">@article{kwon2026cameo,
   title={CAMEO: Correspondence-Attention Alignment for Multi-View Diffusion Models},
   author={Kwon, Minkyung and Choi, Jinhyeok and Park, Jiho and Jeon, Seonghu and Jang, Jinhyuk and Seo, Junyoung and Kwak, Min-Seop and Kim, Jin-Hwa and Kim, Seungryong},
   journal={arXiv preprint arXiv:26xx.xxxxx},
   year={2026}
 }</code></pre>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 py-8 mt-8">
-        <div class="max-w-4xl mx-auto px-4 text-center text-slate-400 text-sm">
-            <p>
-                Under Review. Please do not distribute.
-            </p>
+    <footer class="footer">
+        <div class="container">
+            <p>Under Review. Please do not distribute.</p>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script>
+        // Generic Carousel Class
+        class Carousel {
+            constructor(containerId, data, renderItem) {
+                this.container = document.getElementById(containerId);
+                this.data = data;
+                this.renderItem = renderItem;
+                this.currentIndex = 0;
+                this.totalSlides = data.length;
+
+                this.init();
+
+                // Handle resize
+                window.addEventListener('resize', () => this.updateHeight());
+
+                // Handle image load for height update
+                this.container.addEventListener('load', () => this.updateHeight(), true);
+            }
+
+            init() {
+                this.container.innerHTML = `
+                    <div class="carousel-viewport">
+                        <div class="carousel-track">
+                            ${this.data.map(item => `
+                                <div class="carousel-slide">
+                                    ${this.renderItem(item)}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <button class="carousel-nav-btn prev">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button class="carousel-nav-btn next">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+
+                    <div class="carousel-dots">
+                        ${this.data.map((_, i) => `
+                            <button class="carousel-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></button>
+                        `).join('')}
+                    </div>
+                `;
+
+                this.track = this.container.querySelector('.carousel-track');
+                this.dots = this.container.querySelectorAll('.carousel-dots button');
+
+                this.container.querySelector('.carousel-nav-btn.prev').onclick = () => this.move(-1);
+                this.container.querySelector('.carousel-nav-btn.next').onclick = () => this.move(1);
+                this.dots.forEach((dot, i) => dot.onclick = () => this.goTo(i));
+            }
+
+            move(direction) {
+                this.currentIndex = (this.currentIndex + direction + this.totalSlides) % this.totalSlides;
+                this.update();
+            }
+
+            goTo(index) {
+                this.currentIndex = index;
+                this.update();
+            }
+
+            update() {
+                this.track.style.transform = `translateX(-${this.currentIndex * 100}%)`;
+                this.dots.forEach((dot, i) => {
+                    dot.className = `carousel-dot ${i === this.currentIndex ? 'active' : ''}`;
+                });
+                this.updateHeight();
+            }
+
+            updateHeight() {
+                const slides = this.container.querySelectorAll('.carousel-slide');
+                if (slides[this.currentIndex]) {
+                    const height = slides[this.currentIndex].offsetHeight;
+                    this.container.querySelector('.carousel-viewport').style.height = `${height}px`;
+                }
+            }
+        }
+
+        // Data & Render Logic
+        const quantitativeData = [
+            {
+                title: "RealEstate10K",
+                desc: "CAMEO achieves a PSNR of 19.4 at only 80k iterations, a level of quality that the baseline model fails to reach even after 160k iterations. This translates to a 2x acceleration in training time.",
+                metrics: [
+                    { id: "psnr-re", label: "PSNR", yDomain: [16, 21], cat3d: [16.6, 17.8, 18.9, 19.3, 19.9, 19.7, 19.6], cameo: [17.9, 18.6, 19.4, 19.6, 20.2, 20.0, 20.1] },
+                    { id: "ssim-re", label: "SSIM", yDomain: [0.60, 0.72], cat3d: [0.62, 0.65, 0.68, 0.69, 0.70, 0.70, 0.69], cameo: [0.65, 0.67, 0.69, 0.70, 0.71, 0.71, 0.71] },
+                    { id: "lpips-re", label: "LPIPS", yDomain: [0.26, 0.38], cat3d: [0.37, 0.33, 0.31, 0.30, 0.29, 0.30, 0.29], cameo: [0.35, 0.31, 0.30, 0.29, 0.28, 0.28, 0.27] }
+                ],
+                iterations: [10, 40, 80, 160, 320, 360, 400]
+            },
+            {
+                title: "CO3D",
+                desc: "On the CO3D dataset, CAMEO consistently outperforms the baseline across all metrics, demonstrating superior geometric consistency and visual fidelity.",
+                metrics: [
+                    { id: "psnr-co", label: "PSNR", yDomain: [14, 19], cat3d: [14.6, 15.2, 16.1, 17.0, 17.5], cameo: [15.4, 15.6, 16.8, 17.4, 18.2] },
+                    { id: "ssim-co", label: "SSIM", yDomain: [0.54, 0.61], cat3d: [0.55, 0.56, 0.57, 0.58, 0.60], cameo: [0.55, 0.57, 0.59, 0.59, 0.61] },
+                    { id: "lpips-co", label: "LPIPS", yDomain: [0.40, 0.58], cat3d: [0.56, 0.53, 0.50, 0.46, 0.45], cameo: [0.52, 0.51, 0.48, 0.46, 0.43] }
+                ],
+                iterations: [10, 40, 80, 160, 320]
+            }
+        ];
+
+        const qualitativeData = [
+            {
+                title: "Complex Geometry",
+                desc: "Scenes with intricate geometric structures, such as staircases and railings. CAMEO preserves sharp structural details where baselines often fail.",
+                image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop"
+            },
+            {
+                title: "Large Viewpoint Change",
+                desc: "Generating novel views with substantial camera rotations. CAMEO maintains robust 3D consistency even in these 'large-rotation' scenarios.",
+                image: "https://images.unsplash.com/photo-1556909212-d5b604d0c90d?q=80&w=1200&auto=format&fit=crop"
+            },
+            {
+                title: "Out-of-Domain Generalization",
+                desc: "Zero-shot performance on unseen datasets. CAMEO demonstrates superior generalization capability compared to the baseline.",
+                image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1200&auto=format&fit=crop"
+            }
+        ];
+
+        const ablationData = [
+            {
+                title: "Effect of Layer Selection",
+                desc: "Applying supervision to different layers reveals that Layer 10 is optimal for geometric alignment.",
+                image: "https://placehold.co/1200x600/e2e8f0/475569?text=Ablation:+Layer+Selection"
+            },
+            {
+                title: "Loss Weight Analysis",
+                desc: "Varying the weight of the CAMEO loss term shows a trade-off between geometric fidelity and texture quality.",
+                image: "https://placehold.co/1200x600/e2e8f0/475569?text=Ablation:+Loss+Weight"
+            }
+        ];
+
+        // Render Functions
+        function renderQuantitative(item) {
+            const charts = item.metrics.map(m => {
+                const chartHtml = createChartSVG(item.iterations, m);
+                return `
+                    <div class="chart-card">
+                        <h4 class="chart-card-title">${m.label}</h4>
+                        ${chartHtml}
+                    </div>
+                `;
+            }).join('');
+
+            const gridColsClass = item.metrics.length === 1 ? 'cols-1' : (item.metrics.length === 2 ? 'cols-2' : 'cols-3');
+
+            return `
+                <div class="results-slide-content">
+                    <h3 class="results-slide-title">${item.title}</h3>
+                    <div class="chart-grid ${gridColsClass}">
+                        ${charts}
+                    </div>
+                    
+                    <div class="results-caption">
+                        <p>${item.desc}</p>
+                         <div class="results-legend">
+                            <div class="legend-item">
+                                <span class="legend-dot bg-cat3d"></span>
+                                <span>CAT3D</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot bg-cameo"></span>
+                                <span style="font-weight: 700;">+ CAMEO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderImageCard(item) {
+            return `
+                <div class="results-slide-content">
+                    <h3 class="results-slide-title">${item.title}</h3>
+                    <div class="analysis-image-container">
+                        <img src="${item.image}" class="analysis-image" alt="${item.title}">
+                    </div>
+                    <div class="results-caption">
+                        <p>${item.desc}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+
+        // Chart Generation
+        function createChartSVG(iterations, metric) {
+            const width = 450;
+            const height = 405;
+            const padding = { top: 27, right: 27, bottom: 75, left: 72 };
+            const chartWidth = width - padding.left - padding.right;
+            const chartHeight = height - padding.top - padding.bottom;
+
+            const minX = Math.min(...iterations);
+            const maxX = Math.max(...iterations);
+            const minY = metric.yDomain[0];
+            const maxY = metric.yDomain[1];
+
+            const xScale = (val) => ((val - minX) / (maxX - minX)) * chartWidth + padding.left;
+            const yScale = (val) => chartHeight - ((val - minY) / (maxY - minY)) * chartHeight + padding.top;
+
+            const createPath = (data) => data.map((y, i) => `${i === 0 ? 'M' : 'L'} ${xScale(iterations[i])} ${yScale(y)}`).join(' ');
+            const cat3dPath = createPath(metric.cat3d);
+            const cameoPath = createPath(metric.cameo);
+
+            const createPoints = (data, color, name) => data.map((y, i) => `
+                <circle cx="${xScale(iterations[i])}" cy="${yScale(y)}" r="12" fill="${color}" stroke="white" stroke-width="4.5" class="chart-point" data-value="${y}">
+                    <title>${name}: ${y}</title>
+                </circle>
+            `).join('');
+
+            const yTicks = [];
+            for (let i = 0; i <= 4; i++) {
+                const val = minY + (maxY - minY) * (i / 4);
+                yTicks.push(`<text x="${padding.left - 10}" y="${yScale(val)}" text-anchor="end" alignment-baseline="middle" class="chart-text">${val.toFixed(2)}</text>`);
+                yTicks.push(`<line x1="${padding.left}" y1="${yScale(val)}" x2="${width - padding.right}" y2="${yScale(val)}" stroke="#e2e8f0" stroke-width="1" />`);
+            }
+
+            const xLabels = [0, Math.floor(iterations.length / 2), iterations.length - 1].map(i =>
+                `<text x="${xScale(iterations[i])}" y="${height - 35}" text-anchor="middle" class="chart-text">${iterations[i]}k</text>`
+            ).join('');
+
+            return `
+                <svg viewBox="0 0 ${width} ${height}" class="chart-svg w-full h-auto">
+                    ${yTicks.join('')}
+                    <path d="${cat3dPath}" fill="none" stroke="#8fdcd4" stroke-width="10.5" />
+                    <path d="${cameoPath}" fill="none" stroke="#22869A" stroke-width="10.5" />
+                    ${createPoints(metric.cat3d, "#8fdcd4", "CAT3D")}
+                    ${createPoints(metric.cameo, "#22869A", "CAMEO")}
+                    <line x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${height - padding.bottom}" stroke="#cbd5e1" stroke-width="1.8" />
+                    <line x1="${padding.left}" y1="${height - padding.bottom}" x2="${width - padding.right}" y2="${height - padding.bottom}" stroke="#cbd5e1" stroke-width="1.8" />
+                    ${xLabels}
+                    <text x="${width / 2}" y="${height - 5}" text-anchor="middle" class="chart-text">Training Iteration</text>
+                </svg>
+            `;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            new Carousel('carousel-quan', quantitativeData, renderQuantitative);
+            new Carousel('carousel-qual', qualitativeData, renderImageCard);
+            new Carousel('carousel-abl', ablationData, renderImageCard);
+            initComparisons();
+        });
+
         // Image Comparison Slider Logic
         function initComparisons() {
             var x, i;
@@ -468,105 +643,139 @@
 
             function compareImages(img) {
                 var slider, clicked = 0, w, h;
-                /* Get the width and height of the img element */
-                w = img.offsetWidth;
-                h = img.offsetHeight;
+                // Use parent container for dimensions to be safe
+                w = img.parentElement.offsetWidth;
+                h = img.parentElement.offsetHeight;
                 
-                /* Fix the width of the image inside the overlay div so it doesn't shrink */
                 var overlayImg = img.getElementsByTagName("img")[0];
                 if (overlayImg) {
                     overlayImg.style.width = w + "px";
-                    overlayImg.style.maxWidth = "none"; // Ensure max-width doesn't constrain it
+                    overlayImg.style.maxWidth = "none";
                 }
                 
-                /* Set the width of the img element to 50%: */
                 img.style.width = (w / 2) + "px";
                 
-                /* Create slider: */
                 slider = document.createElement("DIV");
                 slider.setAttribute("class", "img-comp-slider");
-                /* Insert slider */
                 img.parentElement.insertBefore(slider, img);
                 
-                /* Position the slider in the middle: */
                 slider.style.top = (h / 2) - (slider.offsetHeight / 2) + "px";
                 slider.style.left = (w / 2) - (slider.offsetWidth / 2) + "px";
-
-                /* Execute a function when the mouse button is pressed: */
+                
                 slider.addEventListener("mousedown", slideReady);
-                /* And another function when the mouse button is released: */
                 window.addEventListener("mouseup", slideFinish);
-                /* Or touched (for touch screens: */
                 slider.addEventListener("touchstart", slideReady);
-                /* And released (for touch screens: */
                 window.addEventListener("touchend", slideFinish);
+                
+                // Update dimensions on window resize
+                window.addEventListener('resize', function() {
+                    w = img.parentElement.offsetWidth;
+                    h = img.parentElement.offsetHeight;
+                    if (overlayImg) {
+                        overlayImg.style.width = w + "px";
+                    }
+                    // Recenter slider vertically
+                    slider.style.top = (h / 2) - (slider.offsetHeight / 2) + "px";
+                    // Note: We keep the current slider horizontal position (in pixels) 
+                    // which might drift on resize, but fixing the image width is most important.
+                });
 
                 function slideReady(e) {
-                    /* Prevent any other actions that may occur when moving over the image: */
                     e.preventDefault();
-                    /* The slider is now clicked and ready to move: */
                     clicked = 1;
-                    /* Execute a function when the slider is moved: */
                     window.addEventListener("mousemove", slideMove);
                     window.addEventListener("touchmove", slideMove);
                 }
 
                 function slideFinish() {
-                    /* The slider is no longer clicked: */
                     clicked = 0;
                 }
 
                 function slideMove(e) {
                     var pos;
-                    /* If the slider is no longer clicked, exit this function: */
                     if (clicked == 0) return false;
-                    /* Get the cursor's x position: */
                     pos = getCursorPos(e);
-                    /* Prevent the slider from being positioned outside the image: */
                     if (pos < 0) pos = 0;
                     if (pos > w) pos = w;
-                    /* Execute a function that will resize the overlay image according to the cursor: */
                     slide(pos);
                 }
 
                 function getCursorPos(e) {
                     var a, x = 0;
                     e = (e.changedTouches) ? e.changedTouches[0] : e;
-                    /* Get the x positions of the image: */
                     a = img.getBoundingClientRect();
-                    /* Calculate the cursor's x coordinate, relative to the image: */
                     x = e.pageX - a.left;
-                    /* Consider any page scrolling: */
                     x = x - window.pageXOffset;
                     return x;
                 }
 
                 function slide(x) {
-                    /* Resize the image: */
                     img.style.width = x + "px";
-                    /* Position the slider: */
                     slider.style.left = img.offsetWidth - (slider.offsetWidth / 2) + "px";
                 }
             }
         }
 
-        // Initialize sliders when DOM is ready
-        document.addEventListener('DOMContentLoaded', initComparisons);
-        
-        // Handle window resize for sliders
-        window.addEventListener('resize', function() {
-            // Reset comparisons on resize (simplified)
-            // Ideally, we'd re-calculate widths, but reloading or CSS flex handles most.
-            // For the JS slider, a reload or re-init might be needed if dimensions drastically change.
-        });
 
-        // Copy BibTeX
+        // Scroll Spy for Sidebar
+        function initScrollSpy() {
+            const sections = document.querySelectorAll('section[id]');
+            const sidebarLinks = document.querySelectorAll('.sidebar-item');
+            const sidebar = document.querySelector('.sidebar');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '-50% 0px -50% 0px',
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+
+                        // Remove active class from all sidebar items
+                        sidebarLinks.forEach(link => {
+                            link.classList.remove('active');
+                        });
+
+                        // Add active class to the corresponding sidebar item
+                        const activeLink = document.querySelector(`.sidebar-item[href="#${id}"]`);
+                        if (activeLink) {
+                            activeLink.classList.add('active');
+
+                            // Update gradient position
+                            const linkRect = activeLink.getBoundingClientRect();
+                            const sidebarRect = sidebar.getBoundingClientRect();
+                            const relativeTop = linkRect.top - sidebarRect.top;
+                            sidebar.style.setProperty('--active-position', `${relativeTop - 32}px`);
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        }
+
         function copyBibtex() {
             const text = document.getElementById('bibtex-text').innerText;
             navigator.clipboard.writeText(text).then(() => {
-                alert('BibTeX copied to clipboard!');
+                const btn = document.querySelector('.citation-copy-btn');
+                const original = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                setTimeout(() => {
+                    btn.innerHTML = original;
+                }, 2000);
             });
         }
+
+        // Initialize scroll spy when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            initScrollSpy();
+        });
     </script>
 </body>
+
 </html>
