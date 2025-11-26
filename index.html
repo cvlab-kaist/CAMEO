@@ -9,11 +9,17 @@
         content="Project page for CAMEO: Correspondence-Attention Alignment for Multi-View Diffusion Models (Under Review)">
 
     <!-- Fonts and Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
@@ -188,7 +194,7 @@
                 <h3 class="analysis-subtitle">Emergence of Geometry in Layer 10</h3>
 
                 <div class="analysis-image-container">
-                    <img src="assets/layer_analysis.png"
+                    <img src="assets/analysis_1.svg"
                         onerror="this.src='https://placehold.co/1200x300/e2e8f0/475569?text=Figure+3:+Attention+Maps'"
                         class="analysis-image" alt="Emergence of Geometry in Layer 10">
                 </div>
@@ -213,7 +219,7 @@
                 <h3 class="analysis-subtitle">Causal Role of Layer 10</h3>
 
                 <div class="analysis-image-container">
-                    <img src="assets/layer_analysis.png"
+                    <img src="assets/analysis_2.svg"
                         onerror="this.src='https://placehold.co/1200x300/e2e8f0/475569?text=Figure+4:+Perturbation+Analysis'"
                         class="analysis-image" alt="Causal Role of Layer 10">
                 </div>
@@ -236,16 +242,17 @@
             <div>
                 <h3 class="analysis-subtitle">Quantitative Verification & Limitation</h3>
 
-                <div class="analysis-image-container">
-                    <img src="assets/layer_analysis.png"
-                        onerror="this.src='https://placehold.co/1200x300/e2e8f0/475569?text=Figure+5:+Quantitative+Analysis'"
-                        class="analysis-image" alt="Quantitative Analysis">
+                <div id="analysis-charts-container" class="analysis-charts-container">
+                    <img src="assets/analysis_3a.svg" style="width: 100%; height: auto;" alt="Layer Index Analysis">
+                    <img src="assets/analysis_3b.svg" style="width: 100%; height: auto;" alt="PSNR Analysis">
+                    <img src="assets/analysis_3c.svg" style="width: 100%; height: auto;"
+                        alt="Viewpoint Rotation Analysis">
                 </div>
 
                 <div class="results-caption">
                     <p>
-                        <strong>Quantitative Graphs.</strong> (b) Precision across viewpoint rotation, (c) Precision &
-                        PSNR correlation.
+                        <strong>Quantitative Analysis.</strong> (Left) Precision across layers, (Middle) Precision vs.
+                        Training Iterations, (Right) Precision under viewpoint rotation.
                     </p>
                 </div>
 
@@ -253,7 +260,8 @@
                     We quantitatively evaluated the correspondence precision on the NAVI dataset. Our analysis
                     highlights three key findings:
                 </p>
-                <ul style="list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1.5rem; color: var(--color-text-main); font-size: 1.25rem; line-height: 1.625;">
+                <ul
+                    style="list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1.5rem; color: var(--color-text-main); font-size: 1.2rem; line-height: 1.625;">
                     <li style="margin-bottom: 0.5rem;">
                         <strong>Correlation with Quality:</strong> As shown in the training dynamics, there is a strong
                         positive correlation between correspondence precision and generation quality (PSNR). As the
@@ -297,11 +305,14 @@
 
             <div class="cameo-description">
                 <div>
-                    <h3 class="analysis-subtitle">Correspondence-Attention Alignment Loss (L<sub>CAMEO</sub>)</h3>
+                    <h3 class="analysis-subtitle">Correspondence-Attention Alignment Loss \(\mathcal{L}_{\text{CAMEO}}\)
+                    </h3>
                     <p>
                         At the target layer, we compute the alignment loss by comparing the predicted <strong>3D
-                            Self-Attention Map</strong> (A) with a ground-truth <strong>Geometric Correspondence
-                            Map</strong> (P). The ground truth is derived from dense pointmaps, ensuring that the
+                            Self-Attention Map</strong> \(A^l_{i,j}\) with a ground-truth <strong>Geometric
+                            Correspondence
+                            Map</strong> \(P^{i,j}\). The ground truth is derived from dense pointmaps, ensuring that
+                        the
                         attention weights are maximized at physically correct spatial locations across views. This
                         process effectively injects explicit 3D structural priors into the generative model.
                     </p>
@@ -470,22 +481,12 @@
             {
                 title: "RealEstate10K",
                 desc: "CAMEO achieves a PSNR of 19.4 at only 80k iterations, a level of quality that the baseline model fails to reach even after 160k iterations. This translates to a 2x acceleration in training time.",
-                metrics: [
-                    { id: "psnr-re", label: "PSNR", yDomain: [16, 21], cat3d: [16.6, 17.8, 18.9, 19.3, 19.9, 19.7, 19.6], cameo: [17.9, 18.6, 19.4, 19.6, 20.2, 20.0, 20.1] },
-                    { id: "ssim-re", label: "SSIM", yDomain: [0.60, 0.72], cat3d: [0.62, 0.65, 0.68, 0.69, 0.70, 0.70, 0.69], cameo: [0.65, 0.67, 0.69, 0.70, 0.71, 0.71, 0.71] },
-                    { id: "lpips-re", label: "LPIPS", yDomain: [0.26, 0.38], cat3d: [0.37, 0.33, 0.31, 0.30, 0.29, 0.30, 0.29], cameo: [0.35, 0.31, 0.30, 0.29, 0.28, 0.28, 0.27] }
-                ],
-                iterations: [10, 40, 80, 160, 320, 360, 400]
+                image: "assets/exp_re10k_graph.svg"
             },
             {
                 title: "CO3D",
                 desc: "On the CO3D dataset, CAMEO consistently outperforms the baseline across all metrics, demonstrating superior geometric consistency and visual fidelity.",
-                metrics: [
-                    { id: "psnr-co", label: "PSNR", yDomain: [14, 19], cat3d: [14.6, 15.2, 16.1, 17.0, 17.5], cameo: [15.4, 15.6, 16.8, 17.4, 18.2] },
-                    { id: "ssim-co", label: "SSIM", yDomain: [0.54, 0.61], cat3d: [0.55, 0.56, 0.57, 0.58, 0.60], cameo: [0.55, 0.57, 0.59, 0.59, 0.61] },
-                    { id: "lpips-co", label: "LPIPS", yDomain: [0.40, 0.58], cat3d: [0.56, 0.53, 0.50, 0.46, 0.45], cameo: [0.52, 0.51, 0.48, 0.46, 0.43] }
-                ],
-                iterations: [10, 40, 80, 160, 320]
+                image: "assets/exp_co3d_graph.svg"
             }
         ];
 
@@ -522,37 +523,15 @@
 
         // Render Functions
         function renderQuantitative(item) {
-            const charts = item.metrics.map(m => {
-                const chartHtml = createChartSVG(item.iterations, m);
-                return `
-                    <div class="chart-card">
-                        <h4 class="chart-card-title">${m.label}</h4>
-                        ${chartHtml}
-                    </div>
-                `;
-            }).join('');
-
-            const gridColsClass = item.metrics.length === 1 ? 'cols-1' : (item.metrics.length === 2 ? 'cols-2' : 'cols-3');
-
             return `
                 <div class="results-slide-content">
                     <h3 class="results-slide-title">${item.title}</h3>
-                    <div class="chart-grid ${gridColsClass}">
-                        ${charts}
+                    <div class="analysis-image-container" style="padding: 0 20px;">
+                        <img src="${item.image}" style="width: 100%; height: auto;" alt="${item.title}">
                     </div>
                     
                     <div class="results-caption">
                         <p>${item.desc}</p>
-                         <div class="results-legend">
-                            <div class="legend-item">
-                                <span class="legend-dot bg-cat3d"></span>
-                                <span>CAT3D</span>
-                            </div>
-                            <div class="legend-item">
-                                <span class="legend-dot bg-cameo"></span>
-                                <span style="font-weight: 700;">+ CAMEO</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             `;
@@ -574,56 +553,7 @@
 
 
         // Chart Generation
-        function createChartSVG(iterations, metric) {
-            const width = 450;
-            const height = 405;
-            const padding = { top: 27, right: 27, bottom: 75, left: 72 };
-            const chartWidth = width - padding.left - padding.right;
-            const chartHeight = height - padding.top - padding.bottom;
 
-            const minX = Math.min(...iterations);
-            const maxX = Math.max(...iterations);
-            const minY = metric.yDomain[0];
-            const maxY = metric.yDomain[1];
-
-            const xScale = (val) => ((val - minX) / (maxX - minX)) * chartWidth + padding.left;
-            const yScale = (val) => chartHeight - ((val - minY) / (maxY - minY)) * chartHeight + padding.top;
-
-            const createPath = (data) => data.map((y, i) => `${i === 0 ? 'M' : 'L'} ${xScale(iterations[i])} ${yScale(y)}`).join(' ');
-            const cat3dPath = createPath(metric.cat3d);
-            const cameoPath = createPath(metric.cameo);
-
-            const createPoints = (data, color, name) => data.map((y, i) => `
-                <circle cx="${xScale(iterations[i])}" cy="${yScale(y)}" r="12" fill="${color}" stroke="white" stroke-width="4.5" class="chart-point" data-value="${y}">
-                    <title>${name}: ${y}</title>
-                </circle>
-            `).join('');
-
-            const yTicks = [];
-            for (let i = 0; i <= 4; i++) {
-                const val = minY + (maxY - minY) * (i / 4);
-                yTicks.push(`<text x="${padding.left - 10}" y="${yScale(val)}" text-anchor="end" alignment-baseline="middle" class="chart-text">${val.toFixed(2)}</text>`);
-                yTicks.push(`<line x1="${padding.left}" y1="${yScale(val)}" x2="${width - padding.right}" y2="${yScale(val)}" stroke="#e2e8f0" stroke-width="1" />`);
-            }
-
-            const xLabels = [0, Math.floor(iterations.length / 2), iterations.length - 1].map(i =>
-                `<text x="${xScale(iterations[i])}" y="${height - 35}" text-anchor="middle" class="chart-text">${iterations[i]}k</text>`
-            ).join('');
-
-            return `
-                <svg viewBox="0 0 ${width} ${height}" class="chart-svg w-full h-auto">
-                    ${yTicks.join('')}
-                    <path d="${cat3dPath}" fill="none" stroke="#8fdcd4" stroke-width="10.5" />
-                    <path d="${cameoPath}" fill="none" stroke="#22869A" stroke-width="10.5" />
-                    ${createPoints(metric.cat3d, "#8fdcd4", "CAT3D")}
-                    ${createPoints(metric.cameo, "#22869A", "CAMEO")}
-                    <line x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${height - padding.bottom}" stroke="#cbd5e1" stroke-width="1.8" />
-                    <line x1="${padding.left}" y1="${height - padding.bottom}" x2="${width - padding.right}" y2="${height - padding.bottom}" stroke="#cbd5e1" stroke-width="1.8" />
-                    ${xLabels}
-                    <text x="${width / 2}" y="${height - 5}" text-anchor="middle" class="chart-text">Training Iteration</text>
-                </svg>
-            `;
-        }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
@@ -646,29 +576,29 @@
                 // Use parent container for dimensions to be safe
                 w = img.parentElement.offsetWidth;
                 h = img.parentElement.offsetHeight;
-                
+
                 var overlayImg = img.getElementsByTagName("img")[0];
                 if (overlayImg) {
                     overlayImg.style.width = w + "px";
                     overlayImg.style.maxWidth = "none";
                 }
-                
+
                 img.style.width = (w / 2) + "px";
-                
+
                 slider = document.createElement("DIV");
                 slider.setAttribute("class", "img-comp-slider");
                 img.parentElement.insertBefore(slider, img);
-                
+
                 slider.style.top = (h / 2) - (slider.offsetHeight / 2) + "px";
                 slider.style.left = (w / 2) - (slider.offsetWidth / 2) + "px";
-                
+
                 slider.addEventListener("mousedown", slideReady);
                 window.addEventListener("mouseup", slideFinish);
                 slider.addEventListener("touchstart", slideReady);
                 window.addEventListener("touchend", slideFinish);
-                
+
                 // Update dimensions on window resize
-                window.addEventListener('resize', function() {
+                window.addEventListener('resize', function () {
                     w = img.parentElement.offsetWidth;
                     h = img.parentElement.offsetHeight;
                     if (overlayImg) {
@@ -772,10 +702,15 @@
         }
 
         // Initialize scroll spy when DOM is ready
+        // Initialize charts
         document.addEventListener('DOMContentLoaded', () => {
+            initComparisons();
             initScrollSpy();
         });
+
+
     </script>
 </body>
 
 </html>
+```
