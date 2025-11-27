@@ -354,9 +354,20 @@ p {
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     color: var(--color-text-muted);
+    font-size: 1rem;
+}
+
+.hero-notes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--color-text-light);
     font-size: 0.875rem;
+    font-style: italic;
 }
 
 .hero-buttons {
@@ -535,8 +546,8 @@ p {
 .img-comp-badge {
     position: absolute;
     bottom: 1rem;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.875rem;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.75rem;
     font-weight: 500;
     color: white;
     border-radius: 0.25rem;
@@ -546,8 +557,10 @@ p {
 
 .img-comp-badge.cameo {
     right: 1rem;
-    background-color: rgba(15, 56, 64, 0.9);
-    border: 1px solid var(--color-primary);
+    background-color: #F8FEFB;
+    color: #20879A;
+    border: 2px solid #20879A;
+    font-weight: 700;
 }
 
 .img-comp-badge.baseline {
@@ -970,4 +983,101 @@ p {
     :root {
         --caption-font-size: 0.875rem;
     }
+}
+
+/* Qualitative Grid Layout */
+.qual-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr;
+    gap: 0.5rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    align-items: stretch;
+}
+
+@media (min-width: 768px) {
+    .qual-grid {
+        gap: 0.75rem;
+    }
+}
+
+.qual-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Mobile: Refs span full width - REMOVED to enforce 3-column layout */
+/* .qual-col:first-child {
+    grid-column: 1 / -1;
+} */
+
+@media (min-width: 768px) {
+    .qual-col:first-child {
+        grid-column: auto;
+    }
+}
+
+.qual-header {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 0.1rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.qual-ref-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.qual-ref-img {
+    width: 100%;
+    /* aspect-ratio: 1 / 1; REMOVED to allow filling height */
+    flex: 1;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.qual-main-img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Ensure comparison container fits the grid */
+.qual-col .img-comp-container {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    margin: 0;
+}
+
+/* Qualitative Pair Layout */
+.qual-pair-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+}
+
+@media (min-width: 1280px) {
+    .qual-pair-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Generated View Border */
+.qual-col:last-child .img-comp-container,
+.qual-col:last-child .qual-main-img {
+    border: 4px solid #20879A;
+    box-sizing: border-box;
 }

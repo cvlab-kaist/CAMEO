@@ -57,26 +57,31 @@
                 </video>
                 : Correspondence-Attention Alignment for Multi-View Diffusion Models
             </h1>
-            <p class="hero-status">Under Review</p>
+            <p class="hero-status">arXiv 2025</p>
 
             <!-- Authors -->
+            <!-- Authors -->
             <div class="hero-authors">
-                <span>Minkyung Kwon<sup>1</sup></span>
-                <span>Jinhyeok Choi<sup>1</sup></span>
-                <span>Jiho Park<sup>2</sup></span>
-                <span>Seonghu Jeon<sup>3</sup></span>
+                <span>Minkyung Kwon<sup>*1</sup></span>
+                <span>Jinhyeok Choi<sup>*1</sup></span>
+                <span>Jiho Park<sup>*1</sup></span>
+                <span>Seonghu Jeon<sup>1</sup></span>
                 <span>Jinhyuk Jang<sup>1</sup></span>
                 <span>Junyoung Seo<sup>1</sup></span>
-                <span>Min-Seop Kwak<sup>1</sup></span>
-                <span>Jin-Hwa Kim<sup>4</sup></span>
-                <span>Seungryong Kim<sup>1</sup></span>
+                <span>Minseop Kwak<sup>1</sup></span>
+                <span>Jin-Hwa Kim<sup>&dagger;2,3</sup></span>
+                <span>Seungryong Kim<sup>&dagger;1</sup></span>
             </div>
 
             <div class="hero-affiliations">
-                <span><sup>1</sup>KAIST</span>
-                <span><sup>2</sup>Yonsei University</span>
-                <span><sup>3</sup>Korea University</span>
-                <span><sup>4</sup>NAVER</span>
+                <span><sup>1</sup>KAIST AI</span>
+                <span><sup>2</sup>NAVER AI Lab</span>
+                <span><sup>3</sup>SNU AIIS</span>
+            </div>
+
+            <div class="hero-notes">
+                <span>*: Equal contribution</span>
+                <span>&dagger;: Co-corresponding author</span>
             </div>
 
             <!-- Link Buttons -->
@@ -207,7 +212,8 @@
                 <p>
                     Our layer-wise analysis reveals a distinct contrast in behavior. The shallow layers (e.g., Layers
                     2–6) exhibit significant noise and fail to establish meaningful connections between views. In
-                    contrast, <strong>Layer 10</strong> spontaneously demonstrates a strong emergent ability to capture
+                    contrast, <strong>Layer 10</strong> (in the CAT3D model) spontaneously demonstrates a strong
+                    emergent ability to capture
                     geometric correspondence. Even without explicit supervision, the attention mechanism in this layer
                     naturally focuses on geometrically corresponding points across different views, acting as the
                     primary internal carrier of geometric information.
@@ -310,7 +316,7 @@
                         At the target layer, we compute the alignment loss by comparing the predicted <strong>3D
                             Self-Attention Map</strong> \(A^l_{i,j}\) with a ground-truth <strong>Geometric
                             Correspondence
-                            Map</strong> \(P^{i,j}\). The ground truth is derived from dense pointmaps, ensuring that
+                            Map</strong> \(P_{i,j}\). The ground truth is derived from dense pointmaps, ensuring that
                         the
                         attention weights are maximized at physically correct spatial locations across views. This
                         process effectively injects explicit 3D structural priors into the generative model.
@@ -391,7 +397,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>Under Review. Please do not distribute.</p>
+            <p>arXiv 2025. Please do not distribute.</p>
         </div>
     </footer>
 
@@ -491,19 +497,106 @@
 
         const qualitativeData = [
             {
-                title: "Complex Geometry",
-                desc: "Scenes with intricate geometric structures, such as staircases and railings. CAMEO preserves sharp structural details where baselines often fail.",
-                image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop"
+                title: "Co3D",
+                desc: "CAMEO preserves sharp structural details and maintains consistency across large viewpoint changes, where baselines often fail.",
+                items: [
+                    {
+                        ref1: "assets/co3d/example1/ref1.png",
+                        ref2: "assets/co3d/example1/ref2.png",
+                        gt: "assets/co3d/example1/GT.png",
+                        cameo: "assets/co3d/example1/cameo.png",
+                        baseline: "assets/co3d/example1/cat3d.png"
+                    },
+                    {
+                        ref1: "assets/co3d/example2/ref1.png",
+                        ref2: "assets/co3d/example2/ref2.png",
+                        gt: "assets/co3d/example2/GT.png",
+                        cameo: "assets/co3d/example2/cameo.png",
+                        baseline: "assets/co3d/example2/cat3d.png"
+                    },
+                    {
+                        ref1: "assets/co3d/example3/ref1.png",
+                        ref2: "assets/co3d/example3/ref2.png",
+                        gt: "assets/co3d/example3/GT.png",
+                        cameo: "assets/co3d/example3/cameo.png",
+                        baseline: "assets/co3d/example3/cat3d.png"
+                    },
+                    {
+                        ref1: "assets/co3d/example4/ref1.png",
+                        ref2: "assets/co3d/example4/ref2.png",
+                        gt: "assets/co3d/example4/GT.png",
+                        cameo: "assets/co3d/example4/cameo.png",
+                        baseline: "assets/co3d/example4/cat3d.png"
+                    }
+                ]
             },
             {
-                title: "Large Viewpoint Change",
-                desc: "Generating novel views with substantial camera rotations. CAMEO maintains robust 3D consistency even in these 'large-rotation' scenarios.",
-                image: "https://images.unsplash.com/photo-1556909212-d5b604d0c90d?q=80&w=1200&auto=format&fit=crop"
+                title: "RealEstate10K",
+                desc: "CAMEO demonstrates robust performance on RealEstate10K, handling complex indoor scenes with high fidelity. (Placeholder images)",
+                items: [
+                    {
+                        ref1: "assets/co3d/example1/ref1.png",
+                        ref2: "assets/co3d/example1/ref2.png",
+                        gt: "assets/co3d/example1/GT.png",
+                        cameo: "assets/co3d/example1/cameo.png",
+                        baseline: "assets/co3d/example1/cat3d.png"
+                    },
+                    {
+                        ref1: "assets/co3d/example2/ref1.png",
+                        ref2: "assets/co3d/example2/ref2.png",
+                        gt: "assets/co3d/example2/GT.png",
+                        cameo: "assets/co3d/example2/cameo.png",
+                        baseline: "assets/co3d/example2/cat3d.png"
+                    },
+                    {
+                        ref1: "assets/co3d/example3/ref1.png",
+                        ref2: "assets/co3d/example3/ref2.png",
+                        gt: "assets/co3d/example3/GT.png",
+                        cameo: "assets/co3d/example3/cameo.png",
+                        baseline: "assets/co3d/example3/cat3d.png"
+                    },
+                    {
+                        ref1: "assets/co3d/example4/ref1.png",
+                        ref2: "assets/co3d/example4/ref2.png",
+                        gt: "assets/co3d/example4/GT.png",
+                        cameo: "assets/co3d/example4/cameo.png",
+                        baseline: "assets/co3d/example4/cat3d.png"
+                    }
+                ]
             },
             {
-                title: "Out-of-Domain Generalization",
-                desc: "Zero-shot performance on unseen datasets. CAMEO demonstrates superior generalization capability compared to the baseline.",
-                image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1200&auto=format&fit=crop"
+                title: "DTU (Out-of-domain)",
+                desc: "Even on out-of-domain datasets like DTU, CAMEO maintains structural consistency better than baselines. (Placeholder images)",
+                items: [
+                    {
+                        ref1: "assets/co3d/example3/ref1.png",
+                        ref2: "assets/co3d/example3/ref2.png",
+                        gt: "assets/co3d/example3/GT.png",
+                        cameo: "assets/co3d/example3/cameo.png",
+                        baseline: "assets/co3d/example3/cat3d.png"
+                    },
+                    {
+                        ref1: "assets/co3d/example4/ref1.png",
+                        ref2: "assets/co3d/example4/ref2.png",
+                        gt: "assets/co3d/example4/GT.png",
+                        cameo: "assets/co3d/example4/cameo.png",
+                        baseline: "assets/co3d/example4/cat3d.png"
+                    },
+                    {
+                        ref1: "assets/co3d/example1/ref1.png",
+                        ref2: "assets/co3d/example1/ref2.png",
+                        gt: "assets/co3d/example1/GT.png",
+                        cameo: "assets/co3d/example1/cameo.png",
+                        baseline: "assets/co3d/example1/cat3d.png"
+                    },
+                    {
+                        ref1: "assets/co3d/example2/ref1.png",
+                        ref2: "assets/co3d/example2/ref2.png",
+                        gt: "assets/co3d/example2/GT.png",
+                        cameo: "assets/co3d/example2/cameo.png",
+                        baseline: "assets/co3d/example2/cat3d.png"
+                    }
+                ]
             }
         ];
 
@@ -550,6 +643,62 @@
             `;
         }
 
+        function renderQualitativeCard(item) {
+            return `
+                <div class="qual-grid">
+                    <!-- Column 1: Reference Images -->
+                    <div class="qual-col">
+                        <div class="qual-header">References</div>
+                        <div class="qual-ref-stack">
+                            <img src="${item.ref1}" class="qual-ref-img" alt="Reference 1">
+                            <img src="${item.ref2}" class="qual-ref-img" alt="Reference 2">
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Ground Truth -->
+                    <div class="qual-col">
+                        <div class="qual-header">Ground Truth</div>
+                        <img src="${item.gt}" class="qual-main-img" alt="Ground Truth">
+                    </div>
+
+                    <!-- Column 3: Generated View -->
+                    <div class="qual-col">
+                        <div class="qual-header">Generated View</div>
+                        ${item.baseline ? `
+                            <div class="img-comp-container">
+                                <div class="img-comp-img">
+                                    <img src="${item.cameo}" alt="CAMEO">
+                                    <div class="img-comp-badge cameo">CAMEO</div>
+                                </div>
+                                <div class="img-comp-img img-comp-overlay">
+                                    <img src="${item.baseline}" alt="CAT3D">
+                                    <div class="img-comp-badge baseline">CAT3D</div>
+                                </div>
+                            </div>
+                        ` : `
+                            <img src="${item.cameo}" class="qual-main-img" alt="CAMEO">
+                        `}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderQualitativeSlide(slide) {
+            return `
+                <div class="results-slide-content">
+                    <h3 class="results-slide-title">${slide.title}</h3>
+                    
+                    <div class="qual-pair-grid">
+                        ${slide.items.map(item => renderQualitativeCard(item)).join('')}
+                    </div>
+
+                    <div class="results-caption">
+                        <p>${slide.desc}</p>
+                    </div>
+                </div>
+            `;
+        }
+
 
         // Chart Generation
 
@@ -557,7 +706,7 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             new Carousel('carousel-quan', quantitativeData, renderQuantitative);
-            new Carousel('carousel-qual', qualitativeData, renderImageCard);
+            new Carousel('carousel-qual', qualitativeData, renderQualitativeSlide);
             new Carousel('carousel-abl', ablationData, renderImageCard);
             initComparisons();
         });
@@ -571,6 +720,11 @@
             }
 
             function compareImages(img) {
+                // Check if slider already exists
+                if (img.parentElement.querySelector('.img-comp-slider')) {
+                    return;
+                }
+
                 var slider, clicked = 0, w, h;
                 // Use parent container for dimensions to be safe
                 w = img.parentElement.offsetWidth;
