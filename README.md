@@ -1,6 +1,10 @@
-# CAMEO: Correspondence-Attention Alignment for Multi-View Diffusion Models
 
 <div align="center">
+
+<h1>
+  <span style="color:#006d6d;"><b>CAMEO:</b></span><br>
+  Correspondence-Attention Alignment for Multi-View Diffusion Models
+</h1>
 
 [![Project Page](https://img.shields.io/badge/Project-Page-green)](https://cvlab-kaist.github.io/CAMEO/)
 [![arXiv](https://img.shields.io/badge/arXiv-25xx.xxxxx-b31b1b.svg)](https://arxiv.org/abs/25xx.xxxxx)
@@ -22,9 +26,7 @@
 
 ## Abstract
 
-Multi-view diffusion models have recently established themselves as a powerful paradigm for novel view synthesis, generating diverse images with high visual fidelity. However, the underlying mechanisms that enable these models to maintain geometric consistency across different viewpoints have remained largely unexplored. In this work, we conduct an in-depth analysis of the 3D self-attention layers within these models. We empirically verify that **geometric correspondence naturally emerges in specific attention layers** during training, allowing the model to attend to spatially corresponding regions across reference and target views.
-
-Despite this emergent capability, our analysis reveals that the implicit correspondence signal is often incomplete and fragile, particularly degrading under scenarios involving complex geometries or large viewpoint changes. Addressing this limitation, we introduce **CAMEO** (Correspondence-Attention Alignment), a training framework that explicitly supervises the model's attention maps using dense geometric correspondence priors. By applying this supervision to just a single, optimal attention layer (Layer 10), CAMEO significantly enhances the model's structural understanding. Our experiments demonstrate that CAMEO **reduces the training iterations required for convergence by 50%** while consistently outperforming baseline models in geometric fidelity on challenging datasets such as RealEstate10K and CO3D.
+Multi-view diffusion models have recently emerged as a powerful paradigm for novel view synthesis, yet the underlying mechanism that enables their view-consistency remains unclear. In this work, we first verify that the attention maps of these models acquire geometric correspondence throughout training, attending to the geometrically corresponding regions across reference and target views for view-consistent generation. However, this correspondence signal remains incomplete, with its accuracy degrading under large viewpoint changes. Building on these findings, we introduce CAMEO, a simple yet effective training technique that directly supervises attention maps using geometric correspondence to enhance both the training efficiency and generation quality of multi-view diffusion models. Notably, supervising a single attention layer is sufficient to guide the model toward learning precise correspondences, thereby preserving the geometry and structure of reference images, accelerating convergence, and improving novel view synthesis performance. CAMEO reduces the number of training iterations required for convergence by half while achieving superior performance at the same iteration counts. We further demonstrate that CAMEO is model-agnostic and can be applied to any multi-view diffusion model.
 
 ## To Do
 
