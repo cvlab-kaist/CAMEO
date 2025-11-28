@@ -367,9 +367,9 @@
                 </div>
             </div>
 
-            <!-- 3. Ablation Studies -->
+            <!-- 3. Ablation Study -->
             <div class="results-block">
-                <h2 class="section-title">Ablation Studies</h2>
+                <h2 class="section-title">Ablation Study</h2>
                 <div id="carousel-abl" class="carousel-container">
                     <!-- Injected by JS -->
                 </div>
@@ -399,7 +399,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>arXiv 2025. Please do not distribute.</p>
+            <p>CAMEO: Correspondence-Attention Alignment for Multi-View Diffusion Models.</p>
         </div>
     </footer>
 
@@ -680,14 +680,14 @@
 
         const ablationData = [
             {
-                title: 'Ablation Studies',
-                desc: '<strong>Table 2</strong> presents a comprehensive ablation of our design choices on RealEstate10K. <strong>Table 3</strong> further investigates the optimal layer for supervision. Our full model (bold) consistently achieves the best performance.',
+                title: 'Ablation Study',
+                desc: 'This study presents a comprehensive ablation of our design choices on RealEstate10K. We further investigate the optimal layer for supervision. Our full model (bold) consistently achieves the best performance.',
                 tables: `
                     <div class="ablation-tables-row" style="display: flex; gap: 2rem; justify-content: center; align-items: flex-start; flex-wrap: wrap;">
                         <!-- Table 3: Layer Ablation (Existing) -->
                         <div class="ablation-item" style="flex: 1; min-width: 300px;">
                             <div class="table-caption">
-                                <strong>Table 3. Layer Ablation.</strong> Comparison of applying CAMEO supervision to different attention layers.
+                                <strong>Layer Ablation.</strong> Comparison of applying CAMEO supervision to different attention layers.
                             </div>
                             <table class="results-table">
                                 <thead><tr><th>Layer</th><th>Iter.</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr></thead>
@@ -710,7 +710,7 @@
                         <!-- Table 2: General Ablation (New) -->
                         <div class="ablation-item" style="flex: 1; min-width: 300px;">
                             <div class="table-caption">
-                                <strong>Table 2. Ablation studies of CAMEO on RealEstate10K [56].</strong> All at 40k iterations.
+                                <strong>Ablation Study of CAMEO on RealEstate10K.</strong> All at 40k iterations.
                             </div>
                             <table class="results-table">
                                 <thead><tr><th>Part</th><th>Factor</th><th>Variant</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr></thead>
@@ -744,11 +744,11 @@
             },
             {
                 title: 'Model Generalization: Hunyuan-DiT',
-                desc: 'Validation on a Transformer-based model. CAMEO consistently outperforms the baseline across all metrics (Table 5) and produces sharper visual details.',
+                desc: 'Validation on a Transformer-based model. CAMEO consistently outperforms the baseline across all metrics and produces sharper visual details.',
                 tables: `
                     <div class="ablation-item">
                         <div class="table-caption">
-                            <strong>Table 5. CAMEO on Hunyuan-DiT [36].</strong>
+                            <strong>CAMEO on Hunyuan-DiT.</strong>
                         </div>
                         <table class="results-table">
                             <thead><tr><th>Model</th><th>Iter.</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr></thead>
@@ -787,11 +787,11 @@
             },
             {
                 title: 'Model Generalization: MVGenMaster',
-                desc: 'Performance comparison on the MVGenMaster model (UNet-based). CAMEO accelerates convergence and improves final quality (Table 4).',
+                desc: 'Performance comparison on the MVGenMaster model (UNet-based). CAMEO accelerates convergence and improves final quality.',
                 tables: `
                     <div class="ablation-item">
                         <div class="table-caption">
-                            <strong>Table 4. CAMEO on MVGenMaster [5].</strong>
+                            <strong>CAMEO on MVGenMaster.</strong>
                         </div>
                         <table class="results-table">
                             <thead><tr><th>Model</th><th>Iter.</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr></thead>
