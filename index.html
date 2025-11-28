@@ -680,29 +680,64 @@
 
         const ablationData = [
             {
-                title: 'Optimal Layer Selection',
-                desc: '<strong>Layer 10</strong> consistently yields the best performance (Table 3). Supervision on earlier layers results in marginal gains, suggesting that geometric correspondence is not yet fully formed in these shallow stages.',
+                title: 'Ablation Studies',
+                desc: '<strong>Table 2</strong> presents a comprehensive ablation of our design choices on RealEstate10K. <strong>Table 3</strong> further investigates the optimal layer for supervision. Our full model (bold) consistently achieves the best performance.',
                 tables: `
-                    <div class="ablation-item" style="max-width: 800px; margin: 0 auto;">
-                        <div class="table-caption">
-                            <strong>Table 3. Layer Ablation.</strong> Comparison of applying CAMEO supervision to different attention layers.
+                    <div class="ablation-tables-row" style="display: flex; gap: 2rem; justify-content: center; align-items: flex-start; flex-wrap: wrap;">
+                        <!-- Table 3: Layer Ablation (Existing) -->
+                        <div class="ablation-item" style="flex: 1; min-width: 300px;">
+                            <div class="table-caption">
+                                <strong>Table 3. Layer Ablation.</strong> Comparison of applying CAMEO supervision to different attention layers.
+                            </div>
+                            <table class="results-table">
+                                <thead><tr><th>Layer</th><th>Iter.</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr></thead>
+                                <tbody>
+                                    <tr><td>2</td><td rowspan="5" style="vertical-align: middle;">40k</td><td>18.26</td><td><strong>0.664</strong></td><td><strong>0.336</strong></td></tr>
+                                    <tr><td>4</td><td>17.98</td><td>0.653</td><td>0.343</td></tr>
+                                    <tr><td>6</td><td>17.84</td><td>0.645</td><td>0.342</td></tr>
+                                    <tr><td>7</td><td>18.07</td><td>0.648</td><td>0.339</td></tr>
+                                    <tr class="highlight-row"><td><strong>10</strong></td><td><strong>18.31</strong></td><td>0.658</td><td>0.337</td></tr>
+                                    <tr class="separator-row"><td colspan="5"></td></tr>
+                                    <tr><td>2</td><td rowspan="5" style="vertical-align: middle;">80k</td><td>18.80</td><td>0.676</td><td><strong>0.315</strong></td></tr>
+                                    <tr><td>4</td><td>18.78</td><td>0.673</td><td>0.320</td></tr>
+                                    <tr><td>6</td><td>18.19</td><td>0.663</td><td>0.326</td></tr>
+                                    <tr><td>7</td><td>18.60</td><td>0.666</td><td>0.323</td></tr>
+                                    <tr class="highlight-row"><td><strong>10</strong></td><td><strong>19.08</strong></td><td><strong>0.681</strong></td><td>0.316</td></tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <table class="results-table">
-                            <thead><tr><th>Layer</th><th>Iter.</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr></thead>
-                            <tbody>
-                                <tr><td>2</td><td rowspan="5" style="vertical-align: middle;">40k</td><td>18.26</td><td><strong>0.664</strong></td><td><strong>0.336</strong></td></tr>
-                                <tr><td>4</td><td>17.98</td><td>0.653</td><td>0.343</td></tr>
-                                <tr><td>6</td><td>17.84</td><td>0.645</td><td>0.342</td></tr>
-                                <tr><td>7</td><td>18.07</td><td>0.648</td><td>0.339</td></tr>
-                                <tr class="highlight-row"><td><strong>10</strong></td><td><strong>18.31</strong></td><td>0.658</td><td>0.337</td></tr>
-                                <tr class="separator-row"><td colspan="5"></td></tr>
-                                <tr><td>2</td><td rowspan="5" style="vertical-align: middle;">80k</td><td>18.80</td><td>0.676</td><td><strong>0.315</strong></td></tr>
-                                <tr><td>4</td><td>18.78</td><td>0.673</td><td>0.320</td></tr>
-                                <tr><td>6</td><td>18.19</td><td>0.663</td><td>0.326</td></tr>
-                                <tr><td>7</td><td>18.60</td><td>0.666</td><td>0.323</td></tr>
-                                <tr class="highlight-row"><td><strong>10</strong></td><td><strong>19.08</strong></td><td><strong>0.681</strong></td><td>0.316</td></tr>
-                            </tbody>
-                        </table>
+
+                        <!-- Table 2: General Ablation (New) -->
+                        <div class="ablation-item" style="flex: 1; min-width: 300px;">
+                            <div class="table-caption">
+                                <strong>Table 2. Ablation studies of CAMEO on RealEstate10K [56].</strong> All at 40k iterations.
+                            </div>
+                            <table class="results-table">
+                                <thead><tr><th>Part</th><th>Factor</th><th>Variant</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr></thead>
+                                <tbody>
+                                    <!-- (a) MLP head -->
+                                    <tr><td rowspan="2">(a)</td><td rowspan="2" style="vertical-align: middle;">MLP head</td><td>&times;</td><td>18.08</td><td>0.653</td><td>0.343</td></tr>
+                                    <tr class="highlight-row"><td>&check;</td><td><strong>18.31</strong></td><td><strong>0.658</strong></td><td><strong>0.337</strong></td></tr>
+                                    <tr class="separator-row"><td colspan="6"></td></tr>
+                                    
+                                    <!-- (b) Loss weight -->
+                                    <tr><td rowspan="3">(b)</td><td rowspan="3" style="vertical-align: middle;">Loss weight (&lambda;)</td><td>0.01</td><td>18.22</td><td>0.657</td><td>0.351</td></tr>
+                                    <tr class="highlight-row"><td><strong>0.02</strong></td><td>18.31</td><td><strong>0.658</strong></td><td><strong>0.337</strong></td></tr>
+                                    <tr><td>0.03</td><td><strong>18.37</strong></td><td>0.656</td><td>0.377</td></tr>
+                                    <tr class="separator-row"><td colspan="6"></td></tr>
+
+                                    <!-- (c) Loss type -->
+                                    <tr><td rowspan="2">(c)</td><td rowspan="2" style="vertical-align: middle;">Loss type</td><td>L1</td><td>17.84</td><td>0.641</td><td>0.342</td></tr>
+                                    <tr class="highlight-row"><td>CE(&middot;)</td><td><strong>18.31</strong></td><td><strong>0.658</strong></td><td><strong>0.337</strong></td></tr>
+                                    <tr class="separator-row"><td colspan="6"></td></tr>
+
+                                    <!-- (d) Consistency threshold -->
+                                    <tr><td rowspan="3">(d)</td><td rowspan="3" style="vertical-align: middle;">Consistency<br>threshold (&tau;)</td><td>&infin;</td><td>18.18</td><td>0.656</td><td>0.341</td></tr>
+                                    <tr><td>3</td><td>17.49</td><td>0.648</td><td>0.338</td></tr>
+                                    <tr class="highlight-row"><td><strong>1.5</strong></td><td><strong>18.31</strong></td><td><strong>0.658</strong></td><td><strong>0.337</strong></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 `,
                 qualItems: null // No qualitative results for this slide
@@ -735,18 +770,18 @@
                 `,
                 qualItems: [
                     {
-                        ref1: "assets/co3d/example1/ref1.png",
-                        ref2: "assets/co3d/example1/ref2.png",
-                        gt: "assets/co3d/example1/GT.png",
-                        cameo: "assets/co3d/example1/cameo.png",
-                        baseline: "assets/co3d/example1/cat3d.png"
+                        ref1: "assets/dit/example1/ref1.jpeg",
+                        ref2: "assets/dit/example1/ref2.jpeg",
+                        gt: "assets/dit/example1/GT.jpeg",
+                        cameo: "assets/dit/example1/cameo.jpeg",
+                        baseline: "assets/dit/example1/cat3d.jpeg"
                     },
                     {
-                        ref1: "assets/co3d/example2/ref1.png",
-                        ref2: "assets/co3d/example2/ref2.png",
-                        gt: "assets/co3d/example2/GT.png",
-                        cameo: "assets/co3d/example2/cameo.png",
-                        baseline: "assets/co3d/example2/cat3d.png"
+                        ref1: "assets/dit/example2/ref1.jpeg",
+                        ref2: "assets/dit/example2/ref2.jpeg",
+                        gt: "assets/dit/example2/GT.jpeg",
+                        cameo: "assets/dit/example2/cameo.jpeg",
+                        baseline: "assets/dit/example2/cat3d.jpeg"
                     }
                 ]
             },
@@ -778,18 +813,18 @@
                 `,
                 qualItems: [
                     {
-                        ref1: "assets/co3d/example3/ref1.png",
-                        ref2: "assets/co3d/example3/ref2.png",
-                        gt: "assets/co3d/example3/GT.png",
-                        cameo: "assets/co3d/example3/cameo.png",
-                        baseline: "assets/co3d/example3/cat3d.png"
+                        ref1: "assets/mvgenmaster/example1/ref1.jpeg",
+                        ref2: "assets/mvgenmaster/example1/ref2.jpeg",
+                        gt: "assets/mvgenmaster/example1/GT.jpeg",
+                        cameo: "assets/mvgenmaster/example1/cameo.jpeg",
+                        baseline: "assets/mvgenmaster/example1/cat3d.jpeg"
                     },
                     {
-                        ref1: "assets/co3d/example4/ref1.png",
-                        ref2: "assets/co3d/example4/ref2.png",
-                        gt: "assets/co3d/example4/GT.png",
-                        cameo: "assets/co3d/example4/cameo.png",
-                        baseline: "assets/co3d/example4/cat3d.png"
+                        ref1: "assets/mvgenmaster/example2/ref1.jpeg",
+                        ref2: "assets/mvgenmaster/example2/ref2.jpeg",
+                        gt: "assets/mvgenmaster/example2/GT.jpeg",
+                        cameo: "assets/mvgenmaster/example2/cameo.jpeg",
+                        baseline: "assets/mvgenmaster/example2/cat3d.jpeg"
                     }
                 ]
             }
