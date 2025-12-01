@@ -253,10 +253,12 @@
                 <h3 class="analysis-subtitle">Quantitative Verification</h3>
 
                 <div id="analysis-charts-container" class="analysis-charts-container">
-                    <img src="assets/analysis_3a.svg" style="width: 100%; height: auto;" alt="Layer Index Analysis">
-                    <img src="assets/analysis_3b.svg" style="width: 100%; height: auto;" alt="PSNR Analysis">
-                    <img src="assets/analysis_3c.svg" style="width: 100%; height: auto;"
-                        alt="Viewpoint Rotation Analysis">
+                    <object type="image/svg+xml" data="assets/analysis_3a.svg" style="width: 100%; height: auto;"
+                        aria-label="Layer Index Analysis"></object>
+                    <object type="image/svg+xml" data="assets/analysis_3b.svg" style="width: 100%; height: auto;"
+                        aria-label="PSNR Analysis"></object>
+                    <object type="image/svg+xml" data="assets/analysis_3c.svg" style="width: 100%; height: auto;"
+                        aria-label="Viewpoint Rotation Analysis"></object>
                 </div>
 
                 <div class="results-caption">
@@ -615,7 +617,7 @@
                 <div class="results-slide-content">
                     <h3 class="results-slide-title">${item.title}</h3>
                     <div class="analysis-image-container" style="padding: 0 20px;">
-                        <img src="${item.image}" style="width: 100%; height: auto;" alt="${item.title}">
+                        <object type="image/svg+xml" data="${item.image}" style="width: 100%; height: auto;" aria-label="${item.title}"></object>
                     </div>
                     
                     <div class="results-caption">

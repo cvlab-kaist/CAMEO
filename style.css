@@ -62,7 +62,8 @@ body {
     padding-left: var(--sidebar-width);
 }
 
-img {
+img,
+object {
     max-width: 100%;
     height: auto;
     display: block;
