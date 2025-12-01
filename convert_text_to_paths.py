@@ -137,12 +137,17 @@ def convert_svg_text_to_paths(svg_path, font_path):
         path_elem.set('d', d_string)
         
         # Copy attributes
-        if 'transform' in text_elem.attrib:
-            path_elem.set('transform', text_elem.attrib['transform'])
-        if 'style' in text_elem.attrib:
-            path_elem.set('style', text_elem.attrib['style'])
-        if 'fill' in text_elem.attrib:
-            path_elem.set('fill', text_elem.attrib['fill'])
+        transform = text_elem.get('transform')
+        if transform:
+            path_elem.set('transform', transform)
+        
+        style = text_elem.get('style')
+        if style:
+            path_elem.set('style', style)
+            
+        fill = text_elem.get('fill')
+        if fill:
+            path_elem.set('fill', fill)
         else:
             # Default fill if not specified? Or inherit?
             # Text usually defaults to black.
