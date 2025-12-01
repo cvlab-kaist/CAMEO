@@ -44,7 +44,7 @@ batch (dict)
  └─ point_map (optional): [B, F, 3, H, W]  
 ``` 
 Frame order: reference -> target
-  - Before forwarding model, frame sequence should be ordered as reference -> target.
+  - Before forwarding model, frame sequence should be ordered as [reference_frames, target_frames].
   - In train.py, provide original sequence of the data; the code does ordering automatically.
 
 ## Train
