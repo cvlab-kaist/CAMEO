@@ -37,11 +37,11 @@ Multi-view diffusion models have recently emerged as a powerful paradigm for nov
 ## Dataset
 
 '''
-batch (dict)
- ├─ image:      [B, F, 3, H, W]
- ├─ intrinsic:  [B, F, 3, 3]
- ├─ extrinsic:  [B, F, 3(4), 4]
- └─ point_map (optional): [B, F, 3, H, W]
+batch (dict)  
+ ├─ image:      [B, F, 3, H, W]  
+ ├─ intrinsic:  [B, F, 3, 3]  
+ ├─ extrinsic:  [B, F, 3(4), 4]  
+ └─ point_map (optional): [B, F, 3, H, W]  
 ''' 
 Frame order: reference -> target
   - Before forwarding model, frame sequence should be ordered as reference -> target.
