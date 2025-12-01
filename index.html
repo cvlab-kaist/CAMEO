@@ -618,7 +618,8 @@
             `;
         }
 
-        function renderQualitativeCard(item) {
+        function renderQualitativeCard(item, syncGroup = null) {
+            const syncAttr = syncGroup ? `data-sync-group="${syncGroup}"` : '';
             return `
                 <div class="qual-grid">
                     <!-- Column 1: Reference Images -->
@@ -645,7 +646,7 @@
                                     <img src="${item.cameo}" alt="CAMEO">
                                     <div class="img-comp-badge cameo">CAMEO</div>
                                 </div>
-                                <div class="img-comp-img img-comp-overlay">
+                                <div class="img-comp-img img-comp-overlay" ${syncAttr}>
                                     <img src="${item.baseline}" alt="CAT3D">
                                     <div class="img-comp-badge baseline">CAT3D</div>
                                 </div>
@@ -664,7 +665,7 @@
                     <h3 class="results-slide-title">${slide.title}</h3>
                     
                     <div class="qual-pair-grid">
-                        ${slide.items.map(item => renderQualitativeCard(item)).join('')}
+                        ${slide.items.map(item => renderQualitativeCard(item, 'qual-sync')).join('')}
                     </div>
 
                     <div class="results-caption">
@@ -848,7 +849,7 @@
                             <!-- Right: Qualitative -->
                             <div class="ablation-qual-col">
                                 <div class="qual-pair-grid">
-                                    ${item.qualItems.map(subItem => renderQualitativeCard(subItem)).join('')}
+                                    ${item.qualItems.map(subItem => renderQualitativeCard(subItem, 'abl-sync')).join('')}
                                 </div>
                             </div>
                         </div>
@@ -1050,10 +1051,36 @@
                     return x;
                 }
 
-                function slide(x) {
+                function slide(x, fromSync = false) {
                     img.style.width = x + "px";
                     slider.style.left = img.offsetWidth - (slider.offsetWidth / 2) + "px";
+
+                    // Synchronization Logic
+                    if (!fromSync && img.dataset.syncGroup) {
+                        const groupName = img.dataset.syncGroup;
+                        const groupMembers = document.querySelectorAll(`.img-comp-overlay[data-sync-group="${groupName}"]`);
+
+                        groupMembers.forEach(member => {
+                            if (member !== img) {
+                                // Calculate percentage to handle different widths if necessary (though they should be same)
+                                const percentage = x / w;
+                                const memberW = member.parentElement.offsetWidth;
+                                const memberX = percentage * memberW;
+
+                                // Call slide on the member
+                                // We need to access the slide function of the member. 
+                                // Since scope is isolated, we can trigger a custom event or expose the function.
+                                // Simplest way here: re-implement slide logic or attach function to element.
+                                if (member.slideFunc) {
+                                    member.slideFunc(memberX, true);
+                                }
+                            }
+                        });
+                    }
                 }
+
+                // Attach slide function to element for external access
+                img.slideFunc = slide;
             }
         }
 
