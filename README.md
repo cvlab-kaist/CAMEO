@@ -76,7 +76,7 @@ accelerate launch --mixed_precision="bf16" \
 
 
 ## Acknowledgements
-This code is mainly built upon [MVGenMaster](https://github.com/ewrfcas/MVGenMaster).
+This code is based on the work of [MVGenMaster](https://github.com/ewrfcas/MVGenMaster). Many thanks to them for making their project available.
 
 ## Citation
 
