@@ -109,8 +109,8 @@
                         layers.
                         <span class="tldr-highlight">CAMEO</span> aligns this internal attention with geometric
                         correspondence,<br>achieving
-                        <span class="tldr-highlight">2x faster convergence</span> and <span
-                            class="tldr-highlight">superior geometric consistency</span>.
+                        <span class="tldr-highlight">faster convergence</span> and <span class="tldr-highlight">superior
+                            geometric consistency</span>.
                     </p>
                 </div>
             </div>
@@ -316,29 +316,36 @@
                 <div>
                     <h3 class="analysis-subtitle">Correspondence-Attention Alignment Loss \(\mathcal{L}_{\text{CAMEO}}\)
                     </h3>
+
+                    <ul
+                        style="list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1.5rem; color: var(--color-text-main); font-size: 1.2rem; line-height: 1.625;">
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Cross-View Attention Map \(A^l_{i,j} \in \mathbb{R}^{hw \times hw}\):</strong>
+                            The attention matrix from view \(i\) to view \(j\) at layer \(l\).
+                            For a query token \(x_i\), the row \(A^l_{i,j}(x_i)\) represents the predicted probability
+                            distribution over all tokens in view \(j\).
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Geometric Correspondence Map \(P_{i,j} \in \mathbb{R}^{hw \times hw}\):</strong>
+                            The ground-truth correspondence derived from 3D pointmaps.
+                            For a query \(x_i\), \(P_{i,j}(x_i)\) is a one-hot vector where the entry
+                            corresponding to the matched token \(x_j\) is 1, and all others are 0.
+                        </li>
+                    </ul>
                     <p>
-                        At the target layer, we compute the alignment loss by comparing the predicted <strong>3D
-                            Self-Attention Map</strong> \(A^l_{i,j}\) with a ground-truth <strong>Geometric
-                            Correspondence
-                            Map</strong> \(P_{i,j}\). The ground truth is derived from dense pointmaps, ensuring that
-                        the
-                        attention weights are maximized at physically correct spatial locations across views. This
-                        process effectively injects explicit 3D structural priors into the generative model.
+                        CAMEO minimizes the Cross-Entropy loss between the predicted attention \(A\) and the
+                        ground-truth correspondence \(P\), to ensure the model attends to physically correct regions
+                        across views:
+                        \[ \mathcal{L}_{\text{CAMEO}} = \sum_{i,j} \text{CE}(A^l_{i,j}, P_{i,j}) \]
                     </p>
                     <p>
-                        <strong>Targeted & Simple Supervision:</strong> CAMEO introduces a straightforward yet
-                        highly effective supervision strategy. Instead of redesigning the entire architecture, we
-                        simply align the cross-view attention map with a pre-computed geometric correspondence map.
-                        Crucially, our analysis identified that applying this supervision to a <strong>single target
-                            layer (Layer 10)</strong> is sufficient to propagate geometric awareness throughout the
-                        entire network.
-                    </p>
-                    <p>
-                        <strong>Model-Agnostic Applicability:</strong> The CAMEO framework is designed to be
-                        universally applicable. We demonstrate its effectiveness on both <strong>Stable Video
-                            Diffusion</strong> (a UNet-based video generation model) and
-                        <strong>Hunyuan-DiT</strong> (a Transformer-based diffusion model). In all cases, CAMEO
-                        consistently improves geometric consistency without compromising generation quality.
+                        <strong>Simple, Targeted & Model-Agnostic:</strong> CAMEO introduces a straightforward
+                        supervision strategy by aligning the cross-view attention map with geometric correspondence at a
+                        <strong>single target layer (Layer 10)</strong>. This simple yet effective approach propagates
+                        geometric awareness throughout the network without architectural redesigns. Furthermore, CAMEO
+                        is universally applicable, demonstrating consistent improvements in geometric consistency on
+                        both <strong>Stable Diffusion 2.1</strong> (UNet-based) and <strong>Hunyuan-DiT</strong>
+                        (Transformer-based) without compromising generation quality.
                     </p>
                 </div>
 
@@ -693,12 +700,6 @@
                             <table class="results-table">
                                 <thead><tr><th>Layer</th><th>Iter.</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr></thead>
                                 <tbody>
-                                    <tr><td>2</td><td rowspan="5" style="vertical-align: middle;">40k</td><td>18.26</td><td><strong>0.664</strong></td><td><strong>0.336</strong></td></tr>
-                                    <tr><td>4</td><td>17.98</td><td>0.653</td><td>0.343</td></tr>
-                                    <tr><td>6</td><td>17.84</td><td>0.645</td><td>0.342</td></tr>
-                                    <tr><td>7</td><td>18.07</td><td>0.648</td><td>0.339</td></tr>
-                                    <tr class="highlight-row"><td><strong>10</strong></td><td><strong>18.31</strong></td><td>0.658</td><td>0.337</td></tr>
-                                    <tr class="separator-row"><td colspan="5"></td></tr>
                                     <tr><td>2</td><td rowspan="5" style="vertical-align: middle;">80k</td><td>18.80</td><td>0.676</td><td><strong>0.315</strong></td></tr>
                                     <tr><td>4</td><td>18.78</td><td>0.673</td><td>0.320</td></tr>
                                     <tr><td>6</td><td>18.19</td><td>0.663</td><td>0.326</td></tr>
@@ -717,25 +718,25 @@
                                 <thead><tr><th>Part</th><th>Factor</th><th>Variant</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr></thead>
                                 <tbody>
                                     <!-- (a) MLP head -->
-                                    <tr><td rowspan="2">(a)</td><td rowspan="2" style="vertical-align: middle;">MLP head</td><td>&times;</td><td>18.08</td><td>0.653</td><td>0.343</td></tr>
-                                    <tr class="highlight-row"><td>&check;</td><td><strong>18.31</strong></td><td><strong>0.658</strong></td><td><strong>0.337</strong></td></tr>
+                                    <tr><td rowspan="2">(a)</td><td rowspan="2" style="vertical-align: middle;">MLP head</td><td style="text-align: center;">&times;</td><td>18.08</td><td>0.653</td><td>0.343</td></tr>
+                                    <tr class="highlight-row"><td style="text-align: center; padding-left: 0;">&check;</td><td><strong>18.31</strong></td><td><strong>0.658</strong></td><td><strong>0.337</strong></td></tr>
                                     <tr class="separator-row"><td colspan="6"></td></tr>
                                     
                                     <!-- (b) Loss weight -->
-                                    <tr><td rowspan="3">(b)</td><td rowspan="3" style="vertical-align: middle;">Loss weight (&lambda;)</td><td>0.01</td><td>18.22</td><td>0.657</td><td>0.351</td></tr>
-                                    <tr class="highlight-row"><td><strong>0.02</strong></td><td>18.31</td><td><strong>0.658</strong></td><td><strong>0.337</strong></td></tr>
-                                    <tr><td>0.03</td><td><strong>18.37</strong></td><td>0.656</td><td>0.377</td></tr>
+                                    <tr><td rowspan="3">(b)</td><td rowspan="3" style="vertical-align: middle;">Loss weight (&lambda;)</td><td style="text-align: center;">0.01</td><td>18.22</td><td>0.657</td><td>0.351</td></tr>
+                                    <tr class="highlight-row"><td style="text-align: center; padding-left: 0;"><strong>0.02</strong></td><td>18.31</td><td><strong>0.658</strong></td><td><strong>0.337</strong></td></tr>
+                                    <tr><td style="text-align: center; padding-left: 0;">0.03</td><td><strong>18.37</strong></td><td>0.656</td><td>0.377</td></tr>
                                     <tr class="separator-row"><td colspan="6"></td></tr>
 
                                     <!-- (c) Loss type -->
-                                    <tr><td rowspan="2">(c)</td><td rowspan="2" style="vertical-align: middle;">Loss type</td><td>L1</td><td>17.84</td><td>0.641</td><td>0.342</td></tr>
-                                    <tr class="highlight-row"><td>CE(&middot;)</td><td><strong>18.31</strong></td><td><strong>0.658</strong></td><td><strong>0.337</strong></td></tr>
+                                    <tr><td rowspan="2">(c)</td><td rowspan="2" style="vertical-align: middle;">Loss type</td><td style="text-align: center;">L1</td><td>17.84</td><td>0.641</td><td>0.342</td></tr>
+                                    <tr class="highlight-row"><td style="text-align: center; padding-left: 0;">CE(&middot;)</td><td><strong>18.31</strong></td><td><strong>0.658</strong></td><td><strong>0.337</strong></td></tr>
                                     <tr class="separator-row"><td colspan="6"></td></tr>
 
                                     <!-- (d) Consistency threshold -->
-                                    <tr><td rowspan="3">(d)</td><td rowspan="3" style="vertical-align: middle;">Consistency<br>threshold (&tau;)</td><td>&infin;</td><td>18.18</td><td>0.656</td><td>0.341</td></tr>
-                                    <tr><td>3</td><td>17.49</td><td>0.648</td><td>0.338</td></tr>
-                                    <tr class="highlight-row"><td><strong>1.5</strong></td><td><strong>18.31</strong></td><td><strong>0.658</strong></td><td><strong>0.337</strong></td></tr>
+                                    <tr><td rowspan="3">(d)</td><td rowspan="3" style="vertical-align: middle;">Consistency<br>threshold (&tau;)</td><td style="text-align: center;"><span style="font-size: 1.4em; font-weight: bold;">&infin;</span></td><td>18.18</td><td>0.656</td><td>0.341</td></tr>
+                                    <tr><td style="text-align: center; padding-left: 0;">3</td><td>17.49</td><td>0.648</td><td>0.338</td></tr>
+                                    <tr class="highlight-row"><td style="text-align: center; padding-left: 0;"><strong>1.5</strong></td><td><strong>18.31</strong></td><td><strong>0.658</strong></td><td><strong>0.337</strong></td></tr>
                                 </tbody>
                             </table>
                         </div>
