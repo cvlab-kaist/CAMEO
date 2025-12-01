@@ -1,0 +1,175 @@
+distill_config:
+  distill_pair_num: null
+  distill_pairs:
+  - - 10
+    - point_map
+  distill_loss_weight:
+  - 0.02
+  distill_loss_fn:
+  - cross_entropy
+  unet_query_head:
+  - identity
+  unet_query_head_kwargs:
+  - {}
+  unet_key_head:
+  - identity
+  unet_key_head_kwargs:
+  - {}
+  unet_logit_head:
+  - HeadMlp_Softmax
+  unet_logit_head_kwargs:
+  - per_view: true
+    softmax_temp: 1.0
+    learnable_temp: false
+    mlp_ratio: 4
+    mlp_depth: 1
+  vggt_logit_head:
+  - argmaxonehot
+  vggt_logit_head_kwargs: {}
+  cost_metric:
+  - neg_l2
+  distill_key_for_reference_query:
+  - - reference
+    - target
+  distill_key_for_target_query:
+  - - reference
+    - target
+  save_vram_query_axis: false
+  mask_per_view_consistency:
+  - true
+  mask_full_view_consistency:
+  - false
+  consistency_check:
+  - true
+  consistency_check_cfg:
+  - pixel_threshold: 1.5
+  learning_rate: 0.0001
+  distill_loss_weight_scheduling: null
+  distill_loss_weight_scheduling_config: null
+vggt_on_fly: false
+use_vggt_camera: false
+nframe: 4
+fix_cond_num: null
+min_cond_num: 1
+max_cond_num: 3
+val_nframe: 4
+val_cond_num: 2
+val_compute_fid: false
+val_viz_len: 7
+train_batch_size: 3
+shuffle_train_rate: 0.5
+train_timestep_schedule: uniform
+# add your dataset
+train_dataset:
+  cls_name: ""
+  config:  {}
+val_datasets:
+  val_dataset_1:
+    cls_name: "" 
+    config: {}
+  val_dataset_2:
+    cls_name: ""
+    config: {}
+pretrained_model_name_or_path: stabilityai/stable-diffusion-2-1
+image_size: 512
+gradient_accumulation_steps: 1
+gradient_checkpointing: true
+allow_tf32: false
+dataloader_num_workers: 8
+max_train_steps: 600000
+num_train_epochs: 1500
+checkpointing_steps_manual:
+- 10000
+checkpointing_steps: 10000
+checkpoints_total_limit: -1
+validation_epochs: 10
+prediction_type: null
+use_ema: false
+enable_xformers_memory_efficient_attention: false
+noise_offset: 0.0
+input_perturbation: 0.0
+rescale_betas_zero_snr: true
+beta_schedule: snr_rescale
+snr_rescale: 4
+adaptive_betas: false
+dyn_scheduler: false
+tag_dict:
+  co3dv2:
+  - 2.84011065
+  - 3.48885126
+  - 4.35105637
+  - 5.25987238
+  mvimagenet:
+  - 3.48130056
+  - 4.61248985
+  - 5.81117017
+  - 7.34165587
+  dl3dv:
+  - 5.48732045
+  - 7.71244067
+  - 10.5128295
+  - 13.44243126
+  real10k:
+  - 4.96658347
+  - 6.83804047
+  - 8.88339281
+  - 11.38805201
+  scannet++:
+  - 2.49597564
+  - 3.07893548
+  - 3.77435998
+  - 4.59721609
+  objaverse:
+  - 4.80551779
+  - 6.67680627
+  - 8.88053301
+  - 11.43800651
+  gl3d:
+  - 4.71029608
+  - 6.35166526
+  - 8.07183511
+  - 10.18783744
+match_scheduler: false
+max_overlap: 0.75
+multi_scale: null
+normalize_extrinsic: true
+normalize_t: true
+fourier_embedding: false
+fourier_embed_dim: 18
+model_cfg:
+  cfg_training_rate: 0.1
+  coords_cfg: null
+  enable_depth: false
+  align_depth: false
+  priors3d: false
+  prior_type: null
+  coord_dim: null
+  depth_mid_times: null
+  coord_encoder: null
+  coord_dropout: null
+  coord_downsample_type: null
+  use_rope: false
+  depth_freq: null
+  additional_in_channels: 7
+  no_text_cross_attn: true
+  qk_norm: true
+  domain_dict:
+    re10k: 0
+    co3d: 1
+    others: 2
+  class_embed_type: zero_init
+  num_class_embeds: 3
+opt_cfg:
+  learning_rate: 2.5e-05
+  scale_lr_base_batch_size: null
+  scale_lr: false
+  lr_scheduler: constant_with_warmup
+  lr_warmup_steps: 500
+  snr_gamma: null
+  use_8bit_adam: false
+  adam_beta1: 0.9
+  adam_beta2: 0.999
+  adam_weight_decay: 0.01
+  adam_epsilon: 1.0e-08
+  max_grad_norm: 1.0
+dynamic_nframe: false
