@@ -312,8 +312,9 @@
                         </li>
                     </ul>
                     <p>
-                        CAMEO minimizes the Cross-Entropy loss between the predicted attention \(A\) and the
-                        ground-truth correspondence \(P\), to ensure the model attends to physically correct regions
+                        CAMEO minimizes the Cross-Entropy loss between the predicted attention \(A^l_{i,j}\) and the
+                        ground-truth correspondence \(P_{i,j}\), to ensure the model attends to physically correct
+                        regions
                         across views:
                         \[ \mathcal{L}_{\text{CAMEO}} = \sum_{i,j} \text{CE}(A^l_{i,j}, P_{i,j}) \]
                     </p>
@@ -323,8 +324,8 @@
                         <strong>single target layer (Layer 10)</strong>. This simple yet effective approach propagates
                         geometric awareness throughout the network without architectural redesigns. Furthermore, CAMEO
                         is universally applicable, demonstrating consistent improvements in geometric consistency on
-                        both <strong>Stable Diffusion 2.1</strong> (UNet-based) and <strong>Hunyuan-DiT</strong>
-                        (Transformer-based) without compromising generation quality.
+                        both <strong>UNet-based</strong> and <strong>Transformer-based</strong>
+                        models without compromising generation quality.
                     </p>
                 </div>
 
@@ -368,15 +369,15 @@
     <section id="citation" class="citation-section">
         <div class="container">
             <h2 class="section-title" style="font-size: 1.5rem; border: none; margin-bottom: 1rem;">Citation</h2>
-            <div class="citation-block group" id="bibtex">
+            <div class="citation-block group">
                 <button onclick="copyBibtex()" class="citation-copy-btn">
                     <i class="fa-regular fa-copy"></i> Copy
                 </button>
-                <pre class="citation-code"><code id="bibtex-text">@article{kwon2025cameo,
+                <pre class="citation-code"><code id="bibtex-text">@article{kwon2026cameo,
   title={CAMEO: Correspondence-Attention Alignment for Multi-View Diffusion Models},
   author={Kwon, Minkyung and Choi, Jinhyeok and Park, Jiho and Jeon, Seonghu and Jang, Jinhyuk and Seo, Junyoung and Kwak, Min-Seop and Kim, Jin-Hwa and Kim, Seungryong},
   journal={arXiv preprint arXiv:26xx.xxxxx},
-  year={2025}
+  year={2026}
 }</code></pre>
             </div>
         </div>
@@ -485,7 +486,7 @@
 
         const qualitativeData = [
             {
-                title: "Co3D",
+                title: "CO3D",
                 desc: "CAMEO preserves sharp structural details and maintains consistency across large viewpoint changes, where baselines often fail.",
                 items: [
                     {
@@ -667,7 +668,7 @@
 
         const ablationData = [
             {
-                title: 'Model Generalization: State-of-the-art',
+                title: 'Model Generalization: MVGen',
                 desc: 'Performance comparison on the MVGenMaster model (UNet-based). CAMEO accelerates convergence and improves final quality.',
                 tables: `
                     <div class="ablation-item">
