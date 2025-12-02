@@ -633,8 +633,8 @@
                                     <div class="img-comp-badge cameo">CAMEO</div>
                                 </div>
                                 <div class="img-comp-img img-comp-overlay" ${syncAttr}>
-                                    <img src="${item.baseline}" alt="CAT3D">
-                                    <div class="img-comp-badge baseline">CAT3D</div>
+                                    <img src="${item.baseline}" alt="${item.baselineLabel || 'CAT3D'}">
+                                    <div class="img-comp-badge baseline">${item.baselineLabel || 'CAT3D'}</div>
                                 </div>
                             </div>
                         ` : `
@@ -666,6 +666,96 @@
 
 
         const ablationData = [
+            {
+                title: 'Model Generalization: State-of-the-art',
+                desc: 'Performance comparison on the MVGen model (UNet-based). CAMEO accelerates convergence and improves final quality.',
+                tables: `
+                    <div class="ablation-item">
+                        <div class="table-caption">
+                            <strong>CAMEO on MVGen.</strong>
+                        </div>
+                        <table class="results-table">
+                            <thead><tr><th>Model</th><th>Iter.</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr></thead>
+                            <tbody>
+                                <tr><td>MVGen</td><td rowspan="2" style="vertical-align: middle;">20k</td><td>17.35</td><td>0.649</td><td>0.327</td></tr>
+                                <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>18.31</strong></td><td><strong>0.671</strong></td><td><strong>0.315</strong></td></tr>
+                                <tr class="separator-row"><td colspan="5"></td></tr>
+                                <tr><td>MVGen</td><td rowspan="2" style="vertical-align: middle;">40k</td><td>18.64</td><td><strong>0.682</strong></td><td>0.306</td></tr>
+                                <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>18.70</strong></td><td>0.668</td><td><strong>0.305</strong></td></tr>
+                                <tr class="separator-row"><td colspan="5"></td></tr>
+                                <tr><td>MVGen</td><td rowspan="2" style="vertical-align: middle;">60k</td><td>18.84</td><td>0.678</td><td>0.305</td></tr>
+                                <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>19.21</strong></td><td><strong>0.695</strong></td><td><strong>0.304</strong></td></tr>
+                                <tr class="separator-row"><td colspan="5"></td></tr>
+                                <tr><td>MVGen</td><td rowspan="2" style="vertical-align: middle;">120k</td><td>19.45</td><td>0.699</td><td>0.295</td></tr>
+                                <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>19.56</strong></td><td><strong>0.700</strong></td><td><strong>0.292</strong></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `,
+                qualItems: [
+                    {
+                        ref1: "assets/mvgenmaster/example1/ref1.jpeg",
+                        ref2: "assets/mvgenmaster/example1/ref2.jpeg",
+                        gt: "assets/mvgenmaster/example1/GT.jpeg",
+                        cameo: "assets/mvgenmaster/example1/cameo.jpeg",
+                        baseline: "assets/mvgenmaster/example1/cat3d.jpeg",
+                        baselineLabel: "MVGen"
+                    },
+                    {
+                        ref1: "assets/mvgenmaster/example2/ref1.jpeg",
+                        ref2: "assets/mvgenmaster/example2/ref2.jpeg",
+                        gt: "assets/mvgenmaster/example2/GT.jpeg",
+                        cameo: "assets/mvgenmaster/example2/cameo.jpeg",
+                        baseline: "assets/mvgenmaster/example2/cat3d.jpeg",
+                        baselineLabel: "MVGen"
+                    }
+                ]
+            },
+            {
+                title: 'DiT',
+                desc: 'Validation on a Transformer-based model. CAMEO consistently outperforms the baseline across all metrics and produces sharper visual details.',
+                tables: `
+                    <div class="ablation-item">
+                        <div class="table-caption">
+                            <strong>CAMEO on Hunyuan-DiT.</strong>
+                        </div>
+                        <table class="results-table">
+                            <thead><tr><th>Model</th><th>Iter.</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr></thead>
+                            <tbody>
+                                <tr><td>Hunyuan-DiT</td><td rowspan="2" style="vertical-align: middle;">20k</td><td>14.40</td><td>0.533</td><td>0.459</td></tr>
+                                <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>16.17</strong></td><td><strong>0.575</strong></td><td><strong>0.373</strong></td></tr>
+                                <tr class="separator-row"><td colspan="5"></td></tr>
+                                <tr><td>Hunyuan-DiT</td><td rowspan="2" style="vertical-align: middle;">40k</td><td>17.00</td><td>0.594</td><td>0.321</td></tr>
+                                <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>17.57</strong></td><td><strong>0.612</strong></td><td><strong>0.294</strong></td></tr>
+                                <tr class="separator-row"><td colspan="5"></td></tr>
+                                <tr><td>Hunyuan-DiT</td><td rowspan="2" style="vertical-align: middle;">60k</td><td>17.55</td><td>0.610</td><td>0.289</td></tr>
+                                <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>18.52</strong></td><td><strong>0.639</strong></td><td><strong>0.260</strong></td></tr>
+                                <tr class="separator-row"><td colspan="5"></td></tr>
+                                <tr><td>Hunyuan-DiT</td><td rowspan="2" style="vertical-align: middle;">120k</td><td>19.30</td><td>0.661</td><td>0.218</td></tr>
+                                <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>19.75</strong></td><td><strong>0.677</strong></td><td><strong>0.211</strong></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `,
+                qualItems: [
+                    {
+                        ref1: "assets/dit/example1/ref1.jpeg",
+                        ref2: "assets/dit/example1/ref2.jpeg",
+                        gt: "assets/dit/example1/GT.jpeg",
+                        cameo: "assets/dit/example1/cameo.jpeg",
+                        baseline: "assets/dit/example1/cat3d.jpeg",
+                        baselineLabel: "DiT"
+                    },
+                    {
+                        ref1: "assets/dit/example2/ref1.jpeg",
+                        ref2: "assets/dit/example2/ref2.jpeg",
+                        gt: "assets/dit/example2/GT.jpeg",
+                        cameo: "assets/dit/example2/cameo.jpeg",
+                        baseline: "assets/dit/example2/cat3d.jpeg",
+                        baselineLabel: "DiT"
+                    }
+                ]
+            },
             {
                 title: 'Ablation Study',
                 desc: 'This study presents a comprehensive ablation of our design choices on RealEstate10K. We further investigate the optimal layer for supervision. Our full model (bold) consistently achieves the best performance.',
@@ -716,98 +806,19 @@
                                     <tr><td rowspan="3">(d)</td><td rowspan="3" style="vertical-align: middle;">Consistency<br>threshold (&tau;)</td><td style="text-align: center;"><span style="font-size: 1.4em; font-weight: bold;">&infin;</span></td><td>18.18</td><td>0.656</td><td>0.341</td></tr>
                                     <tr><td style="text-align: center; padding-left: 0;">3</td><td>17.49</td><td>0.648</td><td>0.338</td></tr>
                                     <tr class="highlight-row"><td style="text-align: center; padding-left: 0;"><strong>1.5</strong></td><td><strong>18.31</strong></td><td><strong>0.658</strong></td><td><strong>0.337</strong></td></tr>
+                                    <tr class="separator-row"><td colspan="6"></td></tr>
+
+                                    <!-- (e) Cost Map -->
+                                    <tr class="highlight-row"><td rowspan="2" style="background-color: var(--color-bg); color: var(--color-text-main); font-weight: normal">(e)</td><td rowspan="2" style="vertical-align: middle; background-color: var(--color-bg); color: var(--color-text-main); font-weight: normal">Cost Map</td><td style="text-align: center;">Attention</td><td><strong>18.42</strong></td><td><strong>0.662</strong></td><td><strong>0.323</strong></td></tr>
+                                    <tr><td style="text-align: center; padding-left: 0;">Feat Sim</td><td>18.17</td><td>0.650</td><td>0.333</td></tr>
                                 </tbody>
                             </table>
                         </div>
+
+
                     </div>
                 `,
                 qualItems: null // No qualitative results for this slide
-            },
-            {
-                title: 'Model Generalization: Hunyuan-DiT',
-                desc: 'Validation on a Transformer-based model. CAMEO consistently outperforms the baseline across all metrics and produces sharper visual details.',
-                tables: `
-                    <div class="ablation-item">
-                        <div class="table-caption">
-                            <strong>CAMEO on Hunyuan-DiT.</strong>
-                        </div>
-                        <table class="results-table">
-                            <thead><tr><th>Model</th><th>Iter.</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr></thead>
-                            <tbody>
-                                <tr><td>Hunyuan-DiT</td><td rowspan="2" style="vertical-align: middle;">20k</td><td>14.40</td><td>0.533</td><td>0.459</td></tr>
-                                <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>16.17</strong></td><td><strong>0.575</strong></td><td><strong>0.373</strong></td></tr>
-                                <tr class="separator-row"><td colspan="5"></td></tr>
-                                <tr><td>Hunyuan-DiT</td><td rowspan="2" style="vertical-align: middle;">40k</td><td>17.00</td><td>0.594</td><td>0.321</td></tr>
-                                <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>17.57</strong></td><td><strong>0.612</strong></td><td><strong>0.294</strong></td></tr>
-                                <tr class="separator-row"><td colspan="5"></td></tr>
-                                <tr><td>Hunyuan-DiT</td><td rowspan="2" style="vertical-align: middle;">60k</td><td>17.55</td><td>0.610</td><td>0.289</td></tr>
-                                <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>18.52</strong></td><td><strong>0.639</strong></td><td><strong>0.260</strong></td></tr>
-                                <tr class="separator-row"><td colspan="5"></td></tr>
-                                <tr><td>Hunyuan-DiT</td><td rowspan="2" style="vertical-align: middle;">120k</td><td>19.30</td><td>0.661</td><td>0.218</td></tr>
-                                <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>19.75</strong></td><td><strong>0.677</strong></td><td><strong>0.211</strong></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                `,
-                qualItems: [
-                    {
-                        ref1: "assets/dit/example1/ref1.jpeg",
-                        ref2: "assets/dit/example1/ref2.jpeg",
-                        gt: "assets/dit/example1/GT.jpeg",
-                        cameo: "assets/dit/example1/cameo.jpeg",
-                        baseline: "assets/dit/example1/cat3d.jpeg"
-                    },
-                    {
-                        ref1: "assets/dit/example2/ref1.jpeg",
-                        ref2: "assets/dit/example2/ref2.jpeg",
-                        gt: "assets/dit/example2/GT.jpeg",
-                        cameo: "assets/dit/example2/cameo.jpeg",
-                        baseline: "assets/dit/example2/cat3d.jpeg"
-                    }
-                ]
-            },
-            {
-                title: 'Model Generalization: MVGenMaster',
-                desc: 'Performance comparison on the MVGenMaster model (UNet-based). CAMEO accelerates convergence and improves final quality.',
-                tables: `
-                    <div class="ablation-item">
-                        <div class="table-caption">
-                            <strong>CAMEO on MVGenMaster.</strong>
-                        </div>
-                        <table class="results-table">
-                            <thead><tr><th>Model</th><th>Iter.</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr></thead>
-                            <tbody>
-                                <tr><td>MVGenMaster</td><td rowspan="2" style="vertical-align: middle;">20k</td><td>17.35</td><td>0.649</td><td>0.327</td></tr>
-                                <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>18.31</strong></td><td><strong>0.671</strong></td><td><strong>0.315</strong></td></tr>
-                                <tr class="separator-row"><td colspan="5"></td></tr>
-                                <tr><td>MVGenMaster</td><td rowspan="2" style="vertical-align: middle;">40k</td><td>18.64</td><td><strong>0.682</strong></td><td>0.306</td></tr>
-                                <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>18.70</strong></td><td>0.668</td><td><strong>0.305</strong></td></tr>
-                                <tr class="separator-row"><td colspan="5"></td></tr>
-                                <tr><td>MVGenMaster</td><td rowspan="2" style="vertical-align: middle;">60k</td><td>18.84</td><td>0.678</td><td>0.305</td></tr>
-                                <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>19.21</strong></td><td><strong>0.695</strong></td><td><strong>0.304</strong></td></tr>
-                                <tr class="separator-row"><td colspan="5"></td></tr>
-                                <tr><td>MVGenMaster</td><td rowspan="2" style="vertical-align: middle;">120k</td><td>19.45</td><td>0.699</td><td>0.295</td></tr>
-                                <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>19.56</strong></td><td><strong>0.700</strong></td><td><strong>0.292</strong></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                `,
-                qualItems: [
-                    {
-                        ref1: "assets/mvgenmaster/example1/ref1.jpeg",
-                        ref2: "assets/mvgenmaster/example1/ref2.jpeg",
-                        gt: "assets/mvgenmaster/example1/GT.jpeg",
-                        cameo: "assets/mvgenmaster/example1/cameo.jpeg",
-                        baseline: "assets/mvgenmaster/example1/cat3d.jpeg"
-                    },
-                    {
-                        ref1: "assets/mvgenmaster/example2/ref1.jpeg",
-                        ref2: "assets/mvgenmaster/example2/ref2.jpeg",
-                        gt: "assets/mvgenmaster/example2/GT.jpeg",
-                        cameo: "assets/mvgenmaster/example2/cameo.jpeg",
-                        baseline: "assets/mvgenmaster/example2/cat3d.jpeg"
-                    }
-                ]
             }
         ];
 

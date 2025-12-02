@@ -994,9 +994,10 @@ p {
 
 /* Qualitative Grid Layout */
 .qual-grid {
+    --qual-gap: 0.5rem;
     display: grid;
-    grid-template-columns: 1fr 2fr 2fr;
-    gap: 0.5rem;
+    grid-template-columns: calc(20% - 0.8 * var(--qual-gap)) calc(40% - 0.6 * var(--qual-gap)) calc(40% - 0.6 * var(--qual-gap));
+    gap: var(--qual-gap);
     width: 100%;
     margin-bottom: 0.5rem;
     align-items: stretch;
@@ -1004,7 +1005,7 @@ p {
 
 @media (min-width: 768px) {
     .qual-grid {
-        gap: 0.75rem;
+        --qual-gap: 0.75rem;
     }
 }
 
@@ -1012,6 +1013,8 @@ p {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    height: 100%;
+    min-height: 0;
 }
 
 /* Mobile: Refs span full width - REMOVED to enforce 3-column layout */
@@ -1039,8 +1042,10 @@ p {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    height: 100%;
+    flex: 1;
     justify-content: space-between;
+    height: 100%;
+    min-height: 0;
 }
 
 .qual-ref-img {
@@ -1050,6 +1055,8 @@ p {
     object-fit: cover;
     border-radius: 0.5rem;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    height: 0;
+    min-height: 0;
 }
 
 .qual-main-img {
