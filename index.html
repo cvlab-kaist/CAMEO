@@ -89,8 +89,8 @@
                 <a href="#" class="btn">
                     <i class="fa-solid fa-file-pdf"></i> Paper
                 </a>
-                <a href="#" class="btn btn-outline">
-                    <i class="fa-brands fa-github"></i> Code (Coming Soon)
+                <a href="https://github.com/cvlab-kaist/CAMEO" class="btn btn-outline" target="_blank" rel="noopener">
+                    <i class="fa-brands fa-github"></i> Code
                 </a>
                 <a href="#bibtex" class="btn btn-outline">
                     <i class="fa-solid fa-quote-right"></i> BibTeX
@@ -668,25 +668,25 @@
         const ablationData = [
             {
                 title: 'Model Generalization: State-of-the-art',
-                desc: 'Performance comparison on the MVGen model (UNet-based). CAMEO accelerates convergence and improves final quality.',
+                desc: 'Performance comparison on the MVGenMaster model (UNet-based). CAMEO accelerates convergence and improves final quality.',
                 tables: `
                     <div class="ablation-item">
                         <div class="table-caption">
-                            <strong>CAMEO on MVGen.</strong>
+                            <strong>CAMEO on MVGenMaster.</strong>
                         </div>
                         <table class="results-table">
                             <thead><tr><th>Model</th><th>Iter.</th><th>PSNR&uarr;</th><th>SSIM&uarr;</th><th>LPIPS&darr;</th></tr></thead>
                             <tbody>
-                                <tr><td>MVGen</td><td rowspan="2" style="vertical-align: middle;">20k</td><td>17.35</td><td>0.649</td><td>0.327</td></tr>
+                                <tr><td>MVGenMaster</td><td rowspan="2" style="vertical-align: middle;">20k</td><td>17.35</td><td>0.649</td><td>0.327</td></tr>
                                 <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>18.31</strong></td><td><strong>0.671</strong></td><td><strong>0.315</strong></td></tr>
                                 <tr class="separator-row"><td colspan="5"></td></tr>
-                                <tr><td>MVGen</td><td rowspan="2" style="vertical-align: middle;">40k</td><td>18.64</td><td><strong>0.682</strong></td><td>0.306</td></tr>
+                                <tr><td>MVGenMaster</td><td rowspan="2" style="vertical-align: middle;">40k</td><td>18.64</td><td><strong>0.682</strong></td><td>0.306</td></tr>
                                 <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>18.70</strong></td><td>0.668</td><td><strong>0.305</strong></td></tr>
                                 <tr class="separator-row"><td colspan="5"></td></tr>
-                                <tr><td>MVGen</td><td rowspan="2" style="vertical-align: middle;">60k</td><td>18.84</td><td>0.678</td><td>0.305</td></tr>
+                                <tr><td>MVGenMaster</td><td rowspan="2" style="vertical-align: middle;">60k</td><td>18.84</td><td>0.678</td><td>0.305</td></tr>
                                 <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>19.21</strong></td><td><strong>0.695</strong></td><td><strong>0.304</strong></td></tr>
                                 <tr class="separator-row"><td colspan="5"></td></tr>
-                                <tr><td>MVGen</td><td rowspan="2" style="vertical-align: middle;">120k</td><td>19.45</td><td>0.699</td><td>0.295</td></tr>
+                                <tr><td>MVGenMaster</td><td rowspan="2" style="vertical-align: middle;">120k</td><td>19.45</td><td>0.699</td><td>0.295</td></tr>
                                 <tr class="highlight-row"><td><strong>w/ CAMEO</strong></td><td><strong>19.56</strong></td><td><strong>0.700</strong></td><td><strong>0.292</strong></td></tr>
                             </tbody>
                         </table>
