@@ -83,7 +83,7 @@ This code is based on the work of [MVGenMaster](https://github.com/ewrfcas/MVGen
 If you find our work useful in your research, please consider citing:
 
 ```bibtex
-@article{kwon2026cameo,
+@article{kwon2025cameo,
   title={CAMEO: Correspondence-Attention Alignment for Multi-View Diffusion Models},
   author={Kwon, Minkyung and Choi, Jinhyeok and Park, Jiho and Jeon, Seonghu and Jang, Jinhyuk and Seo, Junyoung and Kwak, Min-Seop and Kim, Jin-Hwa and Kim, Seungryong},
   journal={arXiv preprint arXiv:2512.03045},
