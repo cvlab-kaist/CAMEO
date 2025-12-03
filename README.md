@@ -7,7 +7,7 @@
 </h1>
 
 [![Project Page](https://img.shields.io/badge/Project-Page-green)](https://cvlab-kaist.github.io/CAMEO/)
-[![arXiv](https://img.shields.io/badge/arXiv-25xx.xxxxx-b31b1b.svg)](https://arxiv.org/abs/25xx.xxxxx)
+[![arXiv](https://img.shields.io/badge/arXiv-2512.03045-b31b1b.svg)](https://arxiv.org/abs/2512.03045)
 
 **Minkyung Kwon**<sup>\*1</sup>, **Jinhyeok Choi**<sup>\*1</sup>, **Jiho Park**<sup>\*1</sup>, **Seonghu Jeon**<sup>1</sup>, <br>
 **Jinhyuk Jang**<sup>1</sup>, **Junyoung Seo**<sup>1</sup>, **Minseop Kwak**<sup>1</sup>, **Jin-Hwa Kim**<sup>&dagger;2,3</sup>, **Seungryong Kim**<sup>&dagger;1</sup>
