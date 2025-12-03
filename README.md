@@ -86,7 +86,7 @@ If you find our work useful in your research, please consider citing:
 @article{kwon2026cameo,
   title={CAMEO: Correspondence-Attention Alignment for Multi-View Diffusion Models},
   author={Kwon, Minkyung and Choi, Jinhyeok and Park, Jiho and Jeon, Seonghu and Jang, Jinhyuk and Seo, Junyoung and Kwak, Min-Seop and Kim, Jin-Hwa and Kim, Seungryong},
-  journal={arXiv preprint arXiv:25xx.xxxxx},
+  journal={arXiv preprint arXiv:2512.03045},
   year={2025}
 }
 ```
