@@ -30,7 +30,7 @@ Multi-view diffusion models have recently emerged as a powerful paradigm for nov
 
 ## To Do
 
-- [✅] Release Code
+- [x] Release Code
 
 ## Dataset
 
