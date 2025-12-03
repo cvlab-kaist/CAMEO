@@ -21,7 +21,7 @@
 <br>
 
 <div align="center">
-  <img src="assets/teaser.svg" alt="CAMEO Teaser" width="100%">
+  <img src="assets/teaser.png" alt="CAMEO Teaser" width="100%">
 </div>
 
 ## Abstract
