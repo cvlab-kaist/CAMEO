@@ -43,32 +43,38 @@ def convert_svg_text_to_paths(svg_path, font_path):
     ns = {'svg': 'http://www.w3.org/2000/svg'}
     
     # Handle sizing and viewBox
+    # Handle sizing and viewBox
     width = root.get('width')
     height = root.get('height')
     viewbox = root.get('viewBox')
     
     if width and height and not viewbox:
-        # Remove 'px' if present for calculation (though usually just numbers in these files)
+        # Remove 'px' if present for calculation
         w_val = width.replace('px', '')
         h_val = height.replace('px', '')
         try:
+            # Check if values are numeric before creating viewBox
+            float(w_val)
+            float(h_val)
             # Create viewBox from width and height
             root.set('viewBox', f"0 0 {w_val} {h_val}")
             print(f"  Added viewBox: 0 0 {w_val} {h_val}")
-            
-            # Set width and height to 100% for responsiveness
-            root.set('width', '100%')
-            root.set('height', '100%')
-            print("  Set width and height to 100%")
         except ValueError:
             print(f"  Could not parse width/height for viewBox: {width}, {height}")
-    elif viewbox:
-         # If viewBox exists, just ensure width/height are 100% or removed to allow scaling
-         # But let's be safe and set to 100% if they are absolute values
-         if width and '100%' not in width:
-             root.set('width', '100%')
-         if height and '100%' not in height:
-             root.set('height', '100%')
+            
+    # Re-fetch viewBox in case it was just added
+    viewbox = root.get('viewBox')
+    
+    if viewbox:
+        # Ensure width and height match the viewBox to preserve aspect ratio
+        # This is critical for <object> tags to scale correctly with height: auto
+        parts = viewbox.split()
+        if len(parts) == 4:
+            vb_width = parts[2]
+            vb_height = parts[3]
+            root.set('width', vb_width)
+            root.set('height', vb_height)
+            print(f"  Set width/height to match viewBox: {vb_width}x{vb_height}")
 
     
     # Load font
