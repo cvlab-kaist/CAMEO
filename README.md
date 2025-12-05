@@ -9,7 +9,7 @@
 [![Project Page](https://img.shields.io/badge/Project-Page-green)](https://cvlab-kaist.github.io/CAMEO/)
 [![arXiv](https://img.shields.io/badge/arXiv-2512.03045-b31b1b.svg)](https://arxiv.org/abs/2512.03045)
 
-[**Minkyung Kwon**](https://mkxdxdxd.github.io)<sup>\*1</sup>, **Jinhyeok Choi**<sup>\*1</sup>, **Jiho Park**<sup>\*1</sup>, [**Seonghu Jeon**](https://jeonseonghu.github.io/about-me)<sup>1</sup>, <br>
+[**Minkyung Kwon**](https://mkxdxdxd.github.io)<sup>\*1</sup>, [**Jinhyeok Choi**](https://wlsguur.github.io/)<sup>\*1</sup>, **Jiho Park**<sup>\*1</sup>, [**Seonghu Jeon**](https://jeonseonghu.github.io/about-me)<sup>1</sup>, <br>
 **Jinhyuk Jang**<sup>1</sup>, [**Junyoung Seo**](https://j0seo.github.io/)<sup>1</sup>, [**Minseop Kwak**](https://mskwak01.github.io/)<sup>1</sup>, [**Jin-Hwa Kim**](https://wityworks.com/)<sup>&dagger;2,3</sup>, [**Seungryong Kim**](https://cvlab.kaist.ac.kr/members/faculty)<sup>&dagger;1</sup>
 
 <sup>1</sup>KAIST AI, <sup>2</sup>NAVER AI Lab, <sup>3</sup>SNU AIIS
