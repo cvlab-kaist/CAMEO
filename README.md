@@ -1,11 +1,11 @@
 
 <div align="center">
-  <h1>
-    <span style="color:#006d6d;"><b>CAMEO:</b></span><br>
-    Correspondence-Attention Alignment for Multi-View Diffusion Models
-  </h1>
-  <h3>[CVPR 2025]</h3>
-</div>
+
+<h3>[CVPR 2025]</h3>
+<h1>
+  <span style="color:#006d6d;"><b>CAMEO:</b></span><br>
+  Correspondence-Attention Alignment for Multi-View Diffusion Models
+</h1>
 
 [![Project Page](https://img.shields.io/badge/Project-Page-green)](https://cvlab-kaist.github.io/CAMEO/)
 [![arXiv](https://img.shields.io/badge/arXiv-2512.03045-b31b1b.svg)](https://arxiv.org/abs/2512.03045)
