@@ -1,7 +1,6 @@
 
 <div align="center">
 
-<h3>[CVPR 2026]</h3>
 <h1>
   <span style="color:#006d6d;"><b>CAMEO:</b></span><br>
   Correspondence-Attention Alignment for Multi-View Diffusion Models
